@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Key rollover</title>
+<link rel="previous" href="pgpkeys-master.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="sshnames.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="SF.3"></a>F.3 Key rollover</h1>
+<p>
+Our current keys were generated in August 2018.
+</p>
+<p>
+Each new Master Key is signed with the old one, to show that it really is owned by the same people and not substituted by an attacker.
+</p>
+<p>
+Each new Master Key also signs the previous Release Keys, in case you're trying to verify the signatures on a release prior to the rollover and can find a chain of trust to those keys from any of the people who have signed our new Master Key.
+</p>
+<p>
+Each release is signed with the Release Key that was current at the time of release. We don't go back and re-sign old releases with newly generated keys.
+</p>
+<p>
+The details of all previous keys are given here.
+</p>
+<p>
+<strong>Keys generated in the 2018 rollover</strong>
+</p>
+<dl><dt>
+<a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/keys/master-2018.asc"><strong>Master Key</strong> (2018)</a>
+</dt>
+<dd>
+RSA, 4096-bit. Key ID: <code>76BC7FE4EBFD2D9E</code>. Fingerprint: <code>24E1&nbsp;B1C5&nbsp;75EA&nbsp;3C9F&nbsp;F752&nbsp;&nbsp;A922&nbsp;76BC&nbsp;7FE4&nbsp;EBFD&nbsp;2D9E</code>
+</dd>
+<dt>
+<a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/keys/release-2018.asc"><strong>Release Key</strong> (2018)</a>
+</dt>
+<dd>
+RSA, 3072-bit. Key ID: <code>6289A25F4AE8DA82</code>. Fingerprint: <code>E273&nbsp;94AC&nbsp;A3F9&nbsp;D904&nbsp;9522&nbsp;&nbsp;E054&nbsp;6289&nbsp;A25F&nbsp;4AE8&nbsp;DA82</code>
+</dd>
+<dt>
+<a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/keys/snapshot-2018.asc"><strong>Snapshot Key</strong> (2018)</a>
+</dt>
+<dd>
+RSA, 3072-bit. Key ID: <code>38BA7229B7588FD1</code>. Fingerprint: <code>C92B&nbsp;52E9&nbsp;9AB6&nbsp;1DDA&nbsp;33DB&nbsp;&nbsp;2B7A&nbsp;38BA&nbsp;7229&nbsp;B758&nbsp;8FD1</code>
+</dd>
+<dt>
+<a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/keys/contact-2018.asc"><strong>Secure Contact Key</strong> (2018)</a>
+</dt>
+<dd>
+RSA, 3072-bit. Key ID: <code>657D487977F95C98</code>. Fingerprint: <code>A680&nbsp;0082&nbsp;2998&nbsp;6E46&nbsp;22CA&nbsp;&nbsp;0E43&nbsp;657D&nbsp;4879&nbsp;77F9&nbsp;5C98</code>
+</dd>
+</dl>
+<p>
+<strong>Key generated in 2016</strong> (when we first introduced the Secure Contact Key)
+</p>
+<dl><dt>
+<a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/keys/contact-2016.asc"><strong>Secure Contact Key</strong> (2016)</a>
+</dt>
+<dd>
+RSA, 2048-bit. Main key ID: <code>2048R/8A0AF00B</code> (long version: <code>2048R/C4FCAAD08A0AF00B</code>). Encryption subkey ID: <code>2048R/50C2CF5C</code> (long version: <code>2048R/9EB39CC150C2CF5C</code>). Fingerprint: <code>8A26&nbsp;250E&nbsp;763F&nbsp;E359&nbsp;75F3&nbsp;&nbsp;118F&nbsp;C4FC&nbsp;AAD0&nbsp;8A0A&nbsp;F00B</code>
+</dd>
+</dl>
+<p>
+<strong>Keys generated in the 2015 rollover</strong>
+</p>
+<dl><dt>
+<a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/keys/master-2015.asc"><strong>Master Key</strong> (2015)</a>
+</dt>
+<dd>
+RSA, 4096-bit. Key ID: <code>4096R/04676F7C</code> (long version: <code>4096R/AB585DC604676F7C</code>). Fingerprint: <code>440D&nbsp;E3B5&nbsp;B7A1&nbsp;CA85&nbsp;B3CC&nbsp;&nbsp;1718&nbsp;AB58&nbsp;5DC6&nbsp;0467&nbsp;6F7C</code>
+</dd>
+<dt>
+<a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/keys/release-2015.asc"><strong>Release Key</strong> (2015)</a>
+</dt>
+<dd>
+RSA, 2048-bit. Key ID: <code>2048R/B43434E4</code> (long version: <code>2048R/9DFE2648B43434E4</code>). Fingerprint: <code>0054&nbsp;DDAA&nbsp;8ADA&nbsp;15D2&nbsp;768A&nbsp;&nbsp;6DE7&nbsp;9DFE&nbsp;2648&nbsp;B434&nbsp;34E4</code>
+</dd>
+<dt>
+<a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/keys/snapshot-2015.asc"><strong>Snapshot Key</strong> (2015)</a>
+</dt>
+<dd>
+RSA, 2048-bit. Key ID: <code>2048R/D15F7E8A</code> (long version: <code>2048R/EEF20295D15F7E8A</code>). Fingerprint: <code>0A3B&nbsp;0048&nbsp;FE49&nbsp;9B67&nbsp;A234&nbsp;&nbsp;FEB6&nbsp;EEF2&nbsp;0295&nbsp;D15F&nbsp;7E8A</code>
+</dd>
+</dl>
+<p>
+<strong>Original keys generated in 2000</strong> (two sets, RSA and DSA)
+</p>
+<dl><dt>
+<a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/keys/master-rsa.asc"><strong>Master Key</strong> (original RSA)</a>
+</dt>
+<dd>
+RSA, 1024-bit. Key ID: <code>1024R/1E34AC41</code> (long version: <code>1024R/9D5877BF1E34AC41</code>). Fingerprint: <code>8F&nbsp;15&nbsp;97&nbsp;DA&nbsp;25&nbsp;30&nbsp;AB&nbsp;0D&nbsp;&nbsp;88&nbsp;D1&nbsp;92&nbsp;54&nbsp;11&nbsp;CF&nbsp;0C&nbsp;4C</code>
+</dd>
+<dt>
+<a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/keys/master-dsa.asc"><strong>Master Key</strong> (original DSA)</a>
+</dt>
+<dd>
+DSA, 1024-bit. Key ID: <code>1024D/6A93B34E</code> (long version: <code>1024D/4F5E6DF56A93B34E</code>). Fingerprint: <code>313C&nbsp;3E76&nbsp;4B74&nbsp;C2C5&nbsp;F2AE&nbsp;&nbsp;83A8&nbsp;4F5E&nbsp;6DF5&nbsp;6A93&nbsp;B34E</code>
+</dd>
+<dt>
+<a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/keys/release-rsa.asc"><strong>Release Key</strong> (original RSA)</a>
+</dt>
+<dd>
+RSA, 1024-bit. Key ID: <code>1024R/B41CAE29</code> (long version: <code>1024R/EF39CCC0B41CAE29</code>). Fingerprint: <code>AE&nbsp;65&nbsp;D3&nbsp;F7&nbsp;85&nbsp;D3&nbsp;18&nbsp;E0&nbsp;&nbsp;3B&nbsp;0C&nbsp;9B&nbsp;02&nbsp;FF&nbsp;3A&nbsp;81&nbsp;FE</code>
+</dd>
+<dt>
+<a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/keys/release-dsa.asc"><strong>Release Key</strong> (original DSA)</a>
+</dt>
+<dd>
+DSA, 1024-bit. Key ID: <code>1024D/08B0A90B</code> (long version: <code>1024D/FECD6F3F08B0A90B</code>). Fingerprint: <code>00B1&nbsp;1009&nbsp;38E6&nbsp;9800&nbsp;6518&nbsp;&nbsp;F0AB&nbsp;FECD&nbsp;6F3F&nbsp;08B0&nbsp;A90B</code>
+</dd>
+<dt>
+<a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/keys/snapshot-rsa.asc"><strong>Snapshot Key</strong> (original RSA)</a>
+</dt>
+<dd>
+RSA, 1024-bit. Key ID: <code>1024R/32B903A9</code> (long version: <code>1024R/FAAED21532B903A9</code>). Fingerprint: <code>86&nbsp;8B&nbsp;1F&nbsp;79&nbsp;9C&nbsp;F4&nbsp;7F&nbsp;BD&nbsp;&nbsp;8B&nbsp;1B&nbsp;D7&nbsp;8E&nbsp;C6&nbsp;4E&nbsp;4C&nbsp;03</code>
+</dd>
+<dt>
+<a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/keys/snapshot-dsa.asc"><strong>Snapshot Key</strong> (original DSA)</a>
+</dt>
+<dd>
+DSA, 1024-bit. Key ID: <code>1024D/7D3E4A00</code> (long version: <code>1024D/165E56F77D3E4A00</code>). Fingerprint: <code>63DD&nbsp;8EF8&nbsp;32F5&nbsp;D777&nbsp;9FF0&nbsp;&nbsp;2947&nbsp;165E&nbsp;56F7&nbsp;7D3E&nbsp;4A00</code>
+</dd>
+</dl>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

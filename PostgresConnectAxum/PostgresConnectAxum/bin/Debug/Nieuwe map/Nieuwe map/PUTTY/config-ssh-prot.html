@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>&#8216;SSH protocol version&#8217;</title>
+<link rel="previous" href="config-ssh-comp.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="config-ssh-sharing.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S4.17.4"></a>4.17.4 &#8216;<a name="i0"></a>SSH protocol version&#8217;</h1>
+<p>
+This allows you to select whether to use <a name="i1"></a>SSH protocol version 2 or the older <a name="i2"></a>version 1.
+</p>
+<p>
+You should normally leave this at the default of &#8216;2&#8217;. As well as having fewer features, the older SSH-1 protocol is no longer developed, has many known cryptographic weaknesses, and is generally not considered to be secure. PuTTY's protocol 1 implementation is provided mainly for compatibility, and is no longer being enhanced.
+</p>
+<p>
+If a server offers both versions, prefer &#8216;2&#8217;. If you have some server or piece of equipment that only talks SSH-1, select &#8216;1&#8217; here, and do not treat the resulting connection as secure.
+</p>
+<p>
+PuTTY will not automatically fall back to the other version of the protocol if the server turns out not to match your selection here; instead, it will put up an error message and abort the connection. This prevents an active attacker downgrading an intended SSH-2 connection to SSH-1.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

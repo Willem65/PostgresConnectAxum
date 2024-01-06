@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Agent extension request names</title>
+<link rel="previous" href="sshnames-encrypt.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="authplugin.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="SG.4"></a>G.4 Agent extension request names</h1>
+<p>
+The SSH agent protocol, which is only specified in an Internet-Draft at the time of writing (<a href="https://datatracker.ietf.org/doc/html/draft-miller-ssh-agent"><code>draft-miller-ssh-agent</code></a>), defines an extension mechanism. These names can be sent in an <code>SSH_AGENTC_EXTENSION</code> message.
+</p>
+<dl><dt>
+<code>add-ppk@putty.projects.tartarus.org</code>
+</dt>
+<dd>
+The payload is a single SSH-2 <code>string</code> containing a keypair in the PPK format defined in <a href="ppk.html#AC">appendix C</a>. Compared to the standard <code>SSH_AGENTC_ADD_IDENTITY</code>, this extension allows adding keys in encrypted form, with the agent requesting a decryption passphrase from the user on demand, and able to revert the key to encrypted form.
+</dd>
+<dt>
+<code>reencrypt@putty.projects.tartarus.org</code>
+</dt>
+<dd>
+The payload is a single SSH-2 <code>string</code> specifying a public key blob, as in <code>SSH_AGENTC_REMOVE_IDENTITY</code>. Requests that the agent forget any cleartext form of a specific key.
+<p>
+Returns <code>SSH_AGENT_SUCCESS</code> if the agent ended up holding the key only in encrypted form (even if it was already encrypted); returns <code>SSH_AGENT_EXTENSION_FAILURE</code> if not (if it wasn't held by the agent at all, or only in cleartext form). 
+</p>
+
+</dd>
+<dt>
+<code>reencrypt-all@putty.projects.tartarus.org</code>
+</dt>
+<dd>
+No payload. Requests that the agent forget the cleartext form of any keys for which it holds an encrypted form.
+<p>
+If the agent holds any keys with an encrypted form (or no keys at all), returns <code>SSH_AGENT_SUCCESS</code> to indicate that no such keys are now held in cleartext form, followed by a <code>uint32</code> specifying how many keys remain in cleartext form (because the agent didn't hold an encrypted form for them). If the agent holds nothing but keys in cleartext form, returns <code>SSH_AGENT_EXTENSION_FAILURE</code>. 
+</p>
+
+</dd>
+<dt>
+<code>list-extended@putty.projects.tartarus.org</code>
+</dt>
+<dd>
+No payload. Returns <code>SSH_AGENT_SUCCESS</code> followed by a list of identities similar to <code>SSH_AGENT_IDENTITIES_ANSWER</code>, except that each key has an extra SSH-2 <code>string</code> at the end. Currently that <code>string</code> contains a single <code>uint32</code> flags word, with the following bits defined:
+<dl><dt>
+Bit 0
+</dt>
+<dd>
+If set, key is held with an encrypted form (so that the <code>reencrypt</code> extension can do something useful with it).
+</dd>
+<dt>
+Bit 1
+</dt>
+<dd>
+If set, key's cleartext form is not currently held (so the user will have to supply a passphrase before the key can be used). 
+</dd>
+</dl>
+
+</dd>
+</dl>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

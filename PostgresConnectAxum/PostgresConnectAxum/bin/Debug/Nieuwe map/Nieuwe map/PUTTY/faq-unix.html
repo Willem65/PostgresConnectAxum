@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Is there a port to Unix?</title>
+<link rel="previous" href="faq-ports-general.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="faq-unix-why.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="QA.3.2"></a>A.3.2 <a name="i0"></a>Is there a port to Unix?</h1>
+<p>
+There are Unix ports of most of the traditional PuTTY tools, and also one entirely new application.
+</p>
+<p>
+If you look at the source release, you should find a <code>unix</code> subdirectory. You need <code>cmake</code> to build it; see the file <code>README</code> in the source distribution. This should build you:
+</p>
+<ul><li>
+Unix ports of PuTTY, Plink, PSCP, and PSFTP, which work pretty much the same as their Windows counterparts;
+</li>
+<li>
+Command-line versions of PuTTYgen and Pageant, whose user interface is quite different to the Windows GUI versions;
+</li>
+<li>
+<a name="i1"></a><code>pterm</code> - an <code>xterm</code>-type program which supports the same terminal emulation as PuTTY.
+</li>
+</ul>
+<p>
+If you don't have <a name="i2"></a>Gtk, you should still be able to build the command-line tools.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

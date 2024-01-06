@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Controlling proxy logging</title>
+<link rel="previous" href="config-proxy-command.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="config-ssh.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S4.16.6"></a>4.16.6 Controlling <a name="i0"></a>proxy logging</h1>
+<p>
+Often the proxy interaction has its own diagnostic output; this is particularly the case for local proxy commands.
+</p>
+<p>
+The setting &#8216;Print proxy diagnostics in the terminal window&#8217; lets you control how much of the proxy's diagnostics are printed to the main terminal window, along with output from your main session.
+</p>
+<p>
+By default (&#8216;No&#8217;), proxy diagnostics are only sent to the Event Log; with &#8216;Yes&#8217; they are also printed to the terminal, where they may get mixed up with your main session. &#8216;Only until session starts&#8217; is a compromise; proxy messages will go to the terminal window until the main session is deemed to have started (in a protocol-dependent way), which is when they're most likely to be interesting; any further proxy-related messages during the session will only go to the Event Log.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

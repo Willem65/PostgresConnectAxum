@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>PuTTY authentication plugin protocol</title>
+<link rel="previous" href="sshnames-agent.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="authplugin-req.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="AH"></a>Appendix H: PuTTY authentication plugin protocol</h1>
+<p>
+This appendix contains the specification for the protocol spoken over local IPC between PuTTY and an authentication helper plugin.
+</p>
+<p>
+If you already have an authentication plugin and want to configure PuTTY to use it, see <a href="config-ssh-authplugin.html#S4.22.3">section 4.22.3</a> for how to do that. This appendix is for people writing new authentication plugins.
+</p>
+
+<ul>
+<li><a href="authplugin-req.html#SH.1">H.1 Requirements</a></li>
+<li><a href="authplugin-transport.html#SH.2">H.2 Transport and configuration</a></li>
+<li><a href="authplugin-formats.html#SH.3">H.3 Data formats and marshalling</a></li>
+<li><a href="authplugin-version.html#SH.4">H.4 Protocol versioning</a></li>
+<li><a href="authplugin-overview.html#SH.5">H.5 Overview and sequence of events</a></li>
+<li><a href="authplugin-messages.html#SH.6">H.6 Message formats</a>
+<ul>
+<li><a href="PLUGIN_INIT.html#SH.6.1">H.6.1 <code>PLUGIN_INIT</code></a></li>
+<li><a href="PLUGIN_INIT_RESPONSE.html#SH.6.2">H.6.2 <code>PLUGIN_INIT_RESPONSE</code></a></li>
+<li><a href="PLUGIN_INIT_FAILURE.html#SH.6.3">H.6.3 <code>PLUGIN_INIT_FAILURE</code></a></li>
+<li><a href="PLUGIN_PROTOCOL.html#SH.6.4">H.6.4 <code>PLUGIN_PROTOCOL</code></a></li>
+<li><a href="PLUGIN_PROTOCOL_REJECT.html#SH.6.5">H.6.5 <code>PLUGIN_PROTOCOL_REJECT</code></a></li>
+<li><a href="PLUGIN_PROTOCOL_ACCEPT.html#SH.6.6">H.6.6 <code>PLUGIN_PROTOCOL_ACCEPT</code></a></li>
+<li><a href="PLUGIN_KI_SERVER_REQUEST.html#SH.6.7">H.6.7 <code>PLUGIN_KI_SERVER_REQUEST</code></a></li>
+<li><a href="PLUGIN_KI_SERVER_RESPONSE.html#SH.6.8">H.6.8 <code>PLUGIN_KI_SERVER_RESPONSE</code></a></li>
+<li><a href="PLUGIN_KI_USER_REQUEST.html#SH.6.9">H.6.9 <code>PLUGIN_KI_USER_REQUEST</code></a></li>
+<li><a href="PLUGIN_KI_USER_RESPONSE.html#SH.6.10">H.6.10 <code>PLUGIN_KI_USER_RESPONSE</code></a></li>
+<li><a href="PLUGIN_AUTH_SUCCESS.html#SH.6.11">H.6.11 <code>PLUGIN_AUTH_SUCCESS</code></a></li>
+<li><a href="PLUGIN_AUTH_FAILURE.html#SH.6.12">H.6.12 <code>PLUGIN_AUTH_FAILURE</code></a></li>
+</ul></li>
+<li><a href="authplugin-refs.html#SH.7">H.7 References</a></li>
+</ul>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

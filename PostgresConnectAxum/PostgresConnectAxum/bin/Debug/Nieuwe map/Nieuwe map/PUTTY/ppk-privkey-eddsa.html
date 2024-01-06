@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>EdDSA elliptic-curve keys (Ed25519 and Ed448)</title>
+<link rel="previous" href="ppk-privkey-ecdsa.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="ppk-keys.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="SC.3.4"></a>C.3.4 EdDSA elliptic-curve keys (Ed25519 and Ed448)</h1>
+<p>
+EdDSA elliptic-curve keys are stored using one of the following <strong>algorithm-name</strong> values, each corresponding to a different elliptic curve and key size:
+</p>
+<ul><li>
+&#8216;<code>ssh-ed25519</code>&#8217;
+</li>
+<li>
+&#8216;<code>ssh-ed448</code>&#8217;
+</li>
+</ul>
+<p>
+The public key data has already provided the public elliptic curve point. The private key stores:
+</p>
+<ul><li>
+<code>mpint</code>: the private exponent, which is the discrete log of the public point.
+</li>
+</ul>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

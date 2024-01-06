@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Adding a certificate to your key</title>
+<link rel="previous" href="puttygen-passphrase.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="puttygen-savepriv.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S8.2.9"></a>8.2.9 Adding a <a name="i0"></a>certificate to your key</h1>
+<p>
+In some environments, user authentication keys can be signed in turn by a &#8216;certifying authority&#8217; (&#8216;CA&#8217; for short), and user accounts on an SSH server can be configured to automatically trust any key that's certified by the right signature.
+</p>
+<p>
+This can be a convenient setup if you have a very large number of servers. When you change your key pair, you might otherwise have to edit the <code>authorized_keys</code> file on every server individually, to make them all accept the new key. But if instead you configure all those servers <em>once</em> to accept keys signed as yours by a CA, then when you change your public key, all you have to do is to get the new key certified by the same CA as before, and then all your servers will automatically accept it without needing individual reconfiguration.
+</p>
+<p>
+To get your key signed by a CA, you'll probably send the CA the new <em>public</em> key (not the private half), and get back a modified version of the public key with the certificate included.
+</p>
+<p>
+If you want to incorporate the certificate into your PPK file for convenience, you can use the &#8216;Add certificate to key&#8217; menu option in PuTTYgen's &#8216;Key&#8217; menu. This will give you a single file containing your private key and the certificate, which is everything you need to authenticate to a server prepared to accept that certificate.
+</p>
+<p>
+To remove the certificate again and restore the uncertified PPK file, there's also a &#8216;Remove certificate from key&#8217; option.
+</p>
+<p>
+(However, you don't <em>have</em> to incorporate the certificate into your PPK file. You can equally well use it separately, via the &#8216;Certificate to use with the private key&#8217; option in PuTTY itself. See <a href="config-ssh-cert.html#S4.22.2">section 4.22.2</a>. It's up to you which you find more convenient.)
+</p>
+<p>
+When the currently loaded key in PuTTYgen contains a certificate, the large &#8216;Public key for pasting&#8217; edit box (see <a href="puttygen-pastekey.html#S8.2.12">section 8.2.12</a>) is replaced by a button that brings up an information box telling you about the certificate, such as who it certifies your key as belonging to, when it expires (if ever), and the fingerprint of the CA key that signed it in turn.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

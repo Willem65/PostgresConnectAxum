@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Key derivation</title>
+<link rel="previous" href="ppk-privkey-eddsa.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="ppk-old.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="SC.4"></a>C.4 Key derivation</h1>
+<p>
+When a key file is encrypted, there are three pieces of key material that need to be computed from the passphrase:
+</p>
+<ul><li>
+the key for the symmetric cipher used to encrypt the private key
+</li>
+<li>
+the initialisation vector for that cipher encryption
+</li>
+<li>
+the key for the MAC.
+</li>
+</ul>
+<p>
+If <strong>encryption-type</strong> is &#8216;<code>aes256-cbc</code>&#8217;, then the symmetric cipher key is 32 bytes long, and the initialisation vector is 16 bytes (one cipher block). The length of the MAC key is also chosen to be 32 bytes.
+</p>
+<p>
+If <strong>encryption-type</strong> is &#8216;<code>none</code>&#8217;, then all three of these pieces of data have zero length. (The MAC is still generated and checked in the key file format, but it has a zero-length key.)
+</p>
+<p>
+If the amount of key material required is not zero, then the passphrase is fed to the Argon2 key derivation function, in whichever mode is described in the &#8216;<code>Key-Derivation</code>&#8217; header in the key file, with parameters derived from the various &#8216;<code>Argon2-</code><em>Parameter</em><code>:</code>&#8217; headers.
+</p>
+<p>
+(If the key is unencrypted, then all those headers are omitted, and Argon2 is not run at all.)
+</p>
+<p>
+Argon2 takes two extra string inputs in addition to the passphrase and the salt: a secret key, and some &#8216;associated data&#8217;. In PPK's use of Argon2, these are both set to the empty string.
+</p>
+<p>
+The &#8216;tag length&#8217; parameter to Argon2 (i.e. the amount of data it is asked to output) is set to the sum of the lengths of all of the data items required, i.e. (cipher key length + IV length + MAC key length). The output data is interpreted as the concatenation of the cipher key, the IV and the MAC key, in that order.
+</p>
+<p>
+So, for &#8216;<code>aes256-cbc</code>&#8217;, the tag length will be 32+16+32&nbsp;=&nbsp;80 bytes; of the 80 bytes of output data, the first 32 bytes are used as the 256-bit AES key, the next 16 as the CBC IV, and the final 32 bytes as the HMAC-SHA-256 key.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

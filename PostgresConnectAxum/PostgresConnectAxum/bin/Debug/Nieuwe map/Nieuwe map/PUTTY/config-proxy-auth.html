@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Username and password</title>
+<link rel="previous" href="config-proxy-dns.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="config-proxy-command.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S4.16.4"></a>4.16.4 <a name="i0"></a>Username and <a name="i1"></a>password</h1>
+<p>
+You can enter a username and a password in the &#8216;Username&#8217; and &#8216;Password&#8217; boxes, which will be used if your proxy requires <a name="i2"></a>authentication.
+</p>
+<p>
+<a name="i3"></a>Note that if you save your session, the proxy password will be saved in plain text, so anyone who can access your PuTTY configuration data will be able to discover it.
+</p>
+<p>
+If PuTTY discovers that it needs a proxy username or password and you have not specified one here, PuTTY will prompt for it interactively in the terminal window.
+</p>
+<p>
+Authentication is not fully supported for all forms of proxy:
+</p>
+<ul><li>
+Username and password authentication is supported for HTTP proxies and SOCKS 5 proxies.
+<ul><li>
+With SOCKS 5, authentication is via <a name="i4"></a>CHAP if the proxy supports it (this is not supported in <a name="i5"></a>PuTTYtel); otherwise the password is sent to the proxy in <a name="i6"></a>plain text.
+</li>
+<li>
+With HTTP proxying, authentication is via &#8216;<a name="i7"></a>HTTP Digest&#8217; if possible (again, not supported in PuTTYtel), or &#8216;<a name="i8"></a>HTTP Basic&#8217;. In the latter case, the password is sent to the proxy in <a name="i9"></a>plain text.
+</li>
+</ul>
+
+</li>
+<li>
+SOCKS 4 can use the &#8216;Username&#8217; field, but does not support passwords.
+</li>
+<li>
+SSH proxying can use all the same forms of SSH authentication supported by PuTTY for its main connection. If the SSH server requests password authentication, any configured proxy password will be used, but other authentication methods such as public keys and GSSAPI will be tried first, just as for a primary SSH connection, and if they require credentials such as a key passphrase, PuTTY will interactively prompt for these.
+</li>
+<li>
+You can specify a way to include a username and password in the Telnet/Local proxy command (see <a href="config-proxy-command.html#S4.16.5">section 4.16.5</a>). If you do so, and don't also specify the actual username and/or password in the configuration, PuTTY will interactively prompt for them.
+</li>
+</ul>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>-shareexists: test for connection-sharing upstream</title>
+<link rel="previous" href="plink-option-share.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="plink-option-sanitise.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S7.2.3.4"></a>7.2.3.4 <a name="i0"></a><code>-shareexists</code>: test for connection-sharing upstream</h1>
+<p>
+This option does not make a new connection; instead it allows testing for the presence of an existing connection that can be shared. (See <a href="config-ssh-sharing.html#S4.17.5">section 4.17.5</a> for more information about SSH connection sharing.)
+</p>
+<p>
+A Plink invocation of the form:
+</p>
+<pre><code>plink -shareexists <em>&lt;session&gt;</em>
+</code></pre>
+<p>
+will test whether there is currently a viable &#8216;upstream&#8217; for the session in question, which can be specified using any syntax you'd normally use with Plink to make an actual connection (a host/port number, a bare saved session name, <code>-load</code>, etc). It returns a zero exit status if a usable &#8216;upstream&#8217; exists, nonzero otherwise.
+</p>
+<p>
+(This option is only meaningful with the SSH-2 protocol.)
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Preferring known host keys</title>
+<link rel="previous" href="config-ssh-hostkey-order.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="config-ssh-kex-manual-hostkeys.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S4.19.2"></a>4.19.2 Preferring known host keys</h1>
+<p>
+By default, PuTTY will adjust the preference order for SSH-2 host key algorithms so that any host keys it already knows are moved to the top of the list.
+</p>
+<p>
+This prevents you from having to check and confirm a new host key for a server you already had one for (e.g. because the server has generated an alternative key of a type higher in PuTTY's preference order, or because you changed the preference order itself).
+</p>
+<p>
+However, on the other hand, it can leak information to a listener in the network about <em>whether</em> you already know a host key for this server.
+</p>
+<p>
+For this reason, this policy is configurable. By turning this checkbox off, you can reset PuTTY to always use the exact order of host key algorithms configured in the preference list described in <a href="config-ssh-hostkey-order.html#S4.19.1">section 4.19.1</a>, so that a listener will find out nothing about what keys you had stored.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

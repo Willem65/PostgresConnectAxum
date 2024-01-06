@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Key exchange algorithm selection</title>
+<link rel="previous" href="config-ssh-kex.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="config-ssh-gssapi-kex.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S4.18.1"></a>4.18.1 <a name="i0"></a>Key exchange algorithm selection</h1>
+<p>
+PuTTY supports a variety of SSH-2 key exchange methods, and allows you to choose which one you prefer to use; configuration is similar to cipher selection (see <a href="config-ssh-encryption.html#S4.20">section 4.20</a>).
+</p>
+<p>
+PuTTY currently supports the following key exchange methods:
+</p>
+<ul><li>
+&#8216;NTRU Prime / Curve25519 hybrid&#8217;: &#8216;<a name="i1"></a>Streamlined NTRU Prime&#8217; is a lattice-based algorithm intended to resist <a name="i2"></a>quantum attacks. In this key exchange method, it is run in parallel with a conventional Curve25519-based method (one of those included in &#8216;ECDH&#8217;), in such a way that it should be no <em>less</em> secure than that commonly-used method, and hopefully also resistant to a new class of attacks.
+</li>
+<li>
+&#8216;<a name="i3"></a>ECDH&#8217;: elliptic curve Diffie-Hellman key exchange, with a variety of standard curves and hash algorithms.
+</li>
+<li>
+The original form of <a name="i4"></a>Diffie-Hellman key exchange, with a variety of well-known groups and hashes:
+<ul><li>
+&#8216;Group 18&#8217;, a well-known 8192-bit group, used with the SHA-512 hash function.
+</li>
+<li>
+&#8216;Group 17&#8217;, a well-known 6144-bit group, used with the SHA-512 hash function.
+</li>
+<li>
+&#8216;Group 16&#8217;, a well-known 4096-bit group, used with the SHA-512 hash function.
+</li>
+<li>
+&#8216;Group 15&#8217;, a well-known 3072-bit group, used with the SHA-512 hash function.
+</li>
+<li>
+&#8216;Group 14&#8217;: a well-known 2048-bit group, used with the SHA-256 hash function or, if the server doesn't support that, SHA-1.
+</li>
+<li>
+&#8216;Group 1&#8217;: a well-known 1024-bit group, used with the SHA-1 hash function. Neither we nor current SSH standards recommend using this method any longer, and it's not used by default in new installations; however, it may be the only method supported by very old server software. 
+</li>
+</ul>
+
+</li>
+<li>
+&#8216;Diffie-Hellman <a name="i5"></a>group exchange&#8217;: with this method, instead of using a fixed group, PuTTY requests that the server suggest a group to use for a subsequent Diffie-Hellman key exchange; the server can avoid groups known to be weak, and possibly invent new ones over time, without any changes required to PuTTY's configuration. This key exchange method uses the SHA-256 hash or, if the server doesn't support that, SHA-1.
+</li>
+<li>
+&#8216;<a name="i6"></a>RSA-based key exchange&#8217;: this requires much less computational effort on the part of the client, and somewhat less on the part of the server, than Diffie-Hellman key exchange.
+</li>
+<li>
+&#8216;GSSAPI key exchange&#8217;: see <a href="config-ssh-gssapi-kex.html#S4.18.1.1">section 4.18.1.1</a>.
+</li>
+</ul>
+<p>
+If the first algorithm PuTTY finds is below the &#8216;warn below here&#8217; line, you will see a warning box when you make the connection, similar to that for cipher selection (see <a href="config-ssh-encryption.html#S4.20">section 4.20</a>).
+</p>
+
+<ul>
+<li><a href="config-ssh-gssapi-kex.html#S4.18.1.1">4.18.1.1 GSSAPI-based key exchange</a></li>
+</ul>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

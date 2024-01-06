@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>PLUGIN_INIT_RESPONSE</title>
+<link rel="previous" href="PLUGIN_INIT.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="PLUGIN_INIT_FAILURE.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="SH.6.2"></a>H.6.2 <code>PLUGIN_INIT_RESPONSE</code></h1>
+<p>
+<strong>Direction</strong>: plugin to client
+</p>
+<p>
+<strong>When</strong>: response to <code>PLUGIN_INIT</code>
+</p>
+<p>
+<strong>What happens next</strong>: the client will send <code>PLUGIN_PROTOCOL</code>, or perhaps terminate the session (if no auth method is ever negotiated that the plugin can help with)
+</p>
+<p>
+<strong>Message contents after the type code</strong>:
+</p>
+<ul><li>
+<strong>uint32</strong>: the version number of this protocol that the connection will use. Must be no greater than the max version number sent by the client in <code>PLUGIN_INIT</code>.
+</li>
+<li>
+<strong>string</strong>: the username that the plugin suggests the client use. An empty string means that the plugin has no opinion and the client should stick with the username it already had (or prompt the user, if it had none).
+</li>
+</ul>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

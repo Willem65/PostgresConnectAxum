@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>&#8216;Plugin to provide authentication responses&#8217;</title>
+<link rel="previous" href="config-ssh-cert.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="config-ssh-auth-gssapi.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S4.22.3"></a>4.22.3 &#8216;<a name="i0"></a>Plugin to provide authentication responses&#8217;</h1>
+<p>
+An SSH server can use the &#8216;keyboard-interactive&#8217; protocol to present a series of arbitrary questions and answers. Sometimes this is used for ordinary passwords, but sometimes the server will use the same mechanism for something more complicated, such as a one-time password system.
+</p>
+<p>
+Some of these systems can be automated. For this purpose, PuTTY allows you to provide a separate program to act as a &#8216;plugin&#8217; which will take over the authentication and send answers to the questions on your behalf.
+</p>
+<p>
+If you have been provided with a plugin of this type, you can configure it here, by entering a full command line in the &#8216;Plugin command to run&#8217; box.
+</p>
+<p>
+(If you want to <em>write</em> a plugin of this type, see <a href="authplugin.html#AH">appendix H</a> for the full specification of how the plugin is expected to behave.)
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

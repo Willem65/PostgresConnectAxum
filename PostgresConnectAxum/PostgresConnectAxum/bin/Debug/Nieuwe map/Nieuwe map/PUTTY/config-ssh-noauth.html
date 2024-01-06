@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>&#8216;Bypass authentication entirely&#8217;</title>
+<link rel="previous" href="config-ssh-banner.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="config-ssh-notrivialauth.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S4.21.2"></a>4.21.2 &#8216;Bypass authentication entirely&#8217;</h1>
+<p>
+In SSH-2, it is in principle possible to establish a connection without using SSH's mechanisms to identify or prove who you are to the server. An SSH server could prefer to handle authentication in the data channel, for instance, or simply require no user authentication whatsoever.
+</p>
+<p>
+By default, PuTTY assumes the server requires authentication (we've never heard of one that doesn't), and thus must start this process with a username. If you find you are getting username prompts that you cannot answer, you could try enabling this option. However, most SSH servers will reject this.
+</p>
+<p>
+This is not the option you want if you have a username and just want PuTTY to remember it; for that see <a href="config-username.html#S4.15.1">section 4.15.1</a>. It's also probably not what if you're trying to set up passwordless login to a mainstream SSH server; depending on the server, you probably wanted public-key authentication (<a href="pubkey.html#C8">chapter 8</a>) or perhaps GSSAPI authentication (<a href="config-ssh-auth-gssapi.html#S4.23">section 4.23</a>). (These are still forms of authentication, even if you don't have to interact with them.)
+</p>
+<p>
+This option only affects SSH-2 connections. SSH-1 connections always require an authentication step.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

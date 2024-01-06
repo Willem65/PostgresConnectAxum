@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Connecting using the SUPDUP protocol</title>
+<link rel="previous" href="using-rlogin.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="using-cmdline.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S3.10"></a>3.10 Connecting using the <a name="i0"></a>SUPDUP protocol</h1>
+<p>
+PuTTY can use the SUPDUP protocol to connect to a server.
+</p>
+<p>
+SUPDUP is a login protocol used mainly by PDP-10 and Lisp machines during the period 1975-1990. Like Telnet and Rlogin, it is unsecured, so modern systems almost never support it.
+</p>
+<p>
+To make a connection of this type, select &#8216;SUPDUP&#8217; from the &#8216;Connection type&#8217; radio buttons on the &#8216;Session&#8217; panel (see <a href="config-hostname.html#S4.1.1">section 4.1.1</a>). For further configuration options (character set, more processing, scrolling), you can use the &#8216;SUPDUP&#8217; configuration panel (see <a href="config-supdup.html#S4.32">section 4.32</a>).
+</p>
+<p>
+In SUPDUP, terminal emulation is more integrated with the network protocol than in other protocols such as SSH. The SUPDUP protocol can thus only be used with PuTTY proper, not with the command-line tool Plink.
+</p>
+<p>
+The SUPDUP protocol does not support changing the terminal dimensions, so this capability is disabled during a SUPDUP session.
+</p>
+<p>
+SUPDUP provides no well defined means for one end of the connection to notify the other that the connection is finished. Therefore, PuTTY in SUPDUP mode will remain connected until you close the window using the close button.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

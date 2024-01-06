@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>PLUGIN_KI_USER_REQUEST</title>
+<link rel="previous" href="PLUGIN_KI_SERVER_RESPONSE.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="PLUGIN_KI_USER_RESPONSE.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="SH.6.9"></a>H.6.9 <code>PLUGIN_KI_USER_REQUEST</code></h1>
+<p>
+<strong>Direction</strong>: plugin to client
+</p>
+<p>
+<strong>When</strong>: response to <code>PLUGIN_KI_SERVER_REQUEST</code>, if the plugin cannot answer the server's auth prompts without presenting prompts of its own to the user
+</p>
+<p>
+<strong>What happens next</strong>: the client will send <code>PLUGIN_KI_USER_RESPONSE</code>
+</p>
+<p>
+<strong>Message contents after the type code</strong>: exactly the same as in <code>PLUGIN_KI_SERVER_REQUEST</code> (see <a href="PLUGIN_KI_SERVER_REQUEST.html#SH.6.7">section H.6.7</a>).
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

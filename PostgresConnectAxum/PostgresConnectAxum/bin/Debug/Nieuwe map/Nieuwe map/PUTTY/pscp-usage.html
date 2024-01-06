@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>PSCP Usage</title>
+<link rel="previous" href="pscp-starting.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="pscp-usage-basics.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S5.2"></a>5.2 PSCP Usage</h1>
+<p>
+Once you've got a console window to type into, you can just type <code>pscp</code> on its own to bring up a usage message. This tells you the version of PSCP you're using, and gives you a brief summary of how to use PSCP:
+</p>
+<pre><code>C:\&gt;pscp
+PuTTY Secure Copy client
+Release 0.78
+Usage: pscp [options] [user@]host:source target
+       pscp [options] source [source...] [user@]host:target
+       pscp [options] -ls [user@]host:filespec
+Options:
+  -V        print version information and exit
+  -pgpfp    print PGP key fingerprints and exit
+  -p        preserve file attributes
+  -q        quiet, don't show statistics
+  -r        copy directories recursively
+  -v        show verbose messages
+  -load sessname  Load settings from saved session
+  -P port   connect to specified port
+  -l user   connect with specified username
+  -pwfile file   login with password read from specified file
+  -1 -2     force use of particular SSH protocol version
+  -ssh -ssh-connection
+            force use of particular SSH protocol variant
+  -4 -6     force use of IPv4 or IPv6
+  -C        enable compression
+  -i key    private key file for user authentication
+  -noagent  disable use of Pageant
+  -agent    enable use of Pageant
+  -no-trivial-auth
+            disconnect if SSH authentication succeeds trivially
+  -hostkey keyid
+            manually specify a host key (may be repeated)
+  -batch    disable all interactive prompts
+  -no-sanitise-stderr  don't strip control chars from standard error
+  -proxycmd command
+            use 'command' as local proxy
+  -unsafe   allow server-side wildcards (DANGEROUS)
+  -sftp     force use of SFTP protocol
+  -scp      force use of SCP protocol
+  -sshlog file
+  -sshrawlog file
+            log protocol details to a file
+  -logoverwrite
+  -logappend
+            control what happens when a log file already exists
+</code></pre>
+<p>
+(PSCP's interface is much like the Unix <code>scp</code> command, if you're familiar with that.)
+</p>
+
+<ul>
+<li><a href="pscp-usage-basics.html#S5.2.1">5.2.1 The basics</a>
+<ul>
+<li><a href="pscp-usage-basics-user.html#S5.2.1.1">5.2.1.1 <code>user</code></a></li>
+<li><a href="pscp-usage-basics-host.html#S5.2.1.2">5.2.1.2 <code>host</code></a></li>
+<li><a href="pscp-usage-basics-source.html#S5.2.1.3">5.2.1.3 <code>source</code></a></li>
+<li><a href="pscp-usage-basics-target.html#S5.2.1.4">5.2.1.4 <code>target</code></a></li>
+</ul></li>
+<li><a href="pscp-usage-options.html#S5.2.2">5.2.2 Options</a>
+<ul>
+<li><a href="pscp-usage-options-ls.html#S5.2.2.1">5.2.2.1 <code>-ls</code> list remote files</a></li>
+<li><a href="pscp-usage-options-p.html#S5.2.2.2">5.2.2.2 <code>-p</code> preserve file attributes</a></li>
+<li><a href="pscp-usage-options-q.html#S5.2.2.3">5.2.2.3 <code>-q</code> quiet, don't show statistics</a></li>
+<li><a href="pscp-usage-options-r.html#S5.2.2.4">5.2.2.4 <code>-r</code> copies directories recursively</a></li>
+<li><a href="pscp-usage-options-batch.html#S5.2.2.5">5.2.2.5 <code>-batch</code> avoid interactive prompts</a></li>
+<li><a href="pscp-usage-options-backend.html#S5.2.2.6">5.2.2.6 <code>-sftp</code>, <code>-scp</code> force use of particular file transfer protocol</a></li>
+<li><a href="pscp-option-sanitise.html#S5.2.2.7">5.2.2.7 <code>-no-sanitise-stderr</code>: control error message sanitisation</a></li>
+</ul></li>
+<li><a href="pscp-retval.html#S5.2.3">5.2.3 Return value</a></li>
+<li><a href="pscp-pubkey.html#S5.2.4">5.2.4 Using public key authentication with PSCP</a></li>
+</ul>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

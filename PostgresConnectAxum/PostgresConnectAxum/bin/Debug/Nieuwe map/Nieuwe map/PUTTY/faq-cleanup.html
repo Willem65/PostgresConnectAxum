@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>What does PuTTY leave on a system? How can I clean up after it?</title>
+<link rel="previous" href="faq-publicpc.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="faq-dsa.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="QA.8.2"></a>A.8.2 What does PuTTY leave on a system? How can I <a name="i0"></a>clean up after it?</h1>
+<p>
+PuTTY will leave some Registry entries, and a random seed file, on the PC (see <a href="faq-settings.html#QA.5.2">question A.5.2</a>). Windows 7 and up also remember some information about recently launched sessions for the &#8216;jump list&#8217; feature.
+</p>
+<p>
+If you are using PuTTY on a public PC, or somebody else's PC, you might want to clean this information up when you leave. You can do that automatically, by running the command <code>putty -cleanup</code>. See <a href="using-cleanup.html#S3.11.2">section 3.11.2</a> in the documentation for more detail. (Note that this only removes settings for the currently logged-in user on <a name="i1"></a>multi-user systems.)
+</p>
+<p>
+If PuTTY was installed from the installer package, it will also appear in &#8216;Add/Remove Programs&#8217;. Current versions of the installer do not offer to remove the above-mentioned items, so if you want them removed you should run <code>putty -cleanup</code> before uninstalling.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

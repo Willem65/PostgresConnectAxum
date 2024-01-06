@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Data formats and marshalling</title>
+<link rel="previous" href="authplugin-transport.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="authplugin-version.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="SH.3"></a>H.3 Data formats and marshalling</h1>
+<p>
+This protocol borrows the low-level data formatting from SSH itself, in particular the following wire encodings from <a href="authplugin-refs.html#p0">[RFC4251]</a> section 5:
+</p>
+<dl><dt>
+<strong>byte</strong>
+</dt>
+<dd>
+An integer between 0 and 0xFF inclusive, transmitted as a single byte of binary data.
+</dd>
+<dt>
+<strong>boolean</strong>
+</dt>
+<dd>
+The values &#8216;true&#8217; or &#8216;false&#8217;, transmitted as the bytes 1 and 0 respectively.
+</dd>
+<dt>
+<strong>uint32</strong>
+</dt>
+<dd>
+An integer between 0 and 0xFFFFFFFF inclusive, transmitted as 4 bytes of binary data, in big-endian (&#8216;network&#8217;) byte order.
+</dd>
+<dt>
+<strong>string</strong>
+</dt>
+<dd>
+A sequence of bytes, preceded by a <strong>uint32</strong> giving the number of bytes in the sequence. The length field does not include itself. For example, the empty string is represented by four zero bytes (the <strong>uint32</strong> encoding of 0); the string "AB" is represented by the six bytes 0,0,0,2,'A','B'.
+</dd>
+</dl>
+<p>
+Unlike SSH itself, the protocol spoken between the client and the plugin is unencrypted, because local inter-process pipes are assumed to be secured by the OS kernel. So the binary packet protocol is much simpler than SSH proper, and is similar to SFTP and the OpenSSH agent protocol.
+</p>
+<p>
+The data sent in each direction of the conversation consists of a sequence of <strong>messages</strong> exchanged between the SSH client and the plugin. Each message is encoded as a <strong>string</strong>. The contents of the string begin with a <strong>byte</strong> giving the message type, which determines the format of the rest of the message.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

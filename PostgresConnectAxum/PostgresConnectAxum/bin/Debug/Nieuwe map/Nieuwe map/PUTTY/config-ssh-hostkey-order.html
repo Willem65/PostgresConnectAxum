@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Host key type selection</title>
+<link rel="previous" href="config-ssh-hostkey.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="config-ssh-prefer-known-hostkeys.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S4.19.1"></a>4.19.1 <a name="i0"></a>Host key type selection</h1>
+<p>
+PuTTY supports a variety of SSH-2 host key types, and allows you to choose which one you prefer to use to identify the server. Configuration is similar to cipher selection (see <a href="config-ssh-encryption.html#S4.20">section 4.20</a>).
+</p>
+<p>
+PuTTY currently supports the following host key types:
+</p>
+<ul><li>
+&#8216;<a name="i1"></a>Ed25519&#8217;: <a name="i2"></a>Edwards-curve DSA using a twisted Edwards curve with modulus <code>2^255-19</code>.
+</li>
+<li>
+&#8216;<a name="i3"></a>Ed448&#8217;: another <a name="i4"></a>Edwards-curve DSA type, using a larger elliptic curve with a 448-bit instead of 255-bit modulus (so it has a higher security level than Ed25519).
+</li>
+<li>
+&#8216;ECDSA&#8217;: <a name="i5"></a>elliptic curve <a name="i6"></a>DSA using one of the <a name="i7"></a>NIST-standardised elliptic curves.
+</li>
+<li>
+&#8216;DSA&#8217;: straightforward <a name="i8"></a>DSA using modular exponentiation.
+</li>
+<li>
+&#8216;RSA&#8217;: the ordinary <a name="i9"></a>RSA algorithm.
+</li>
+</ul>
+<p>
+If PuTTY already has one or more host keys stored for the server, it will by default prefer to use one of those, even if the server has a key type that is higher in the preference order. You can add such a key to PuTTY's cache from within an existing session using the &#8216;Special Commands&#8217; menu; see <a href="using-specials.html#S3.1.3.2">section 3.1.3.2</a>.
+</p>
+<p>
+Otherwise, PuTTY will choose a key type based purely on the preference order you specify in the configuration.
+</p>
+<p>
+If the first key type PuTTY finds is below the &#8216;warn below here&#8217; line, you will see a warning box when you make the connection, similar to that for cipher selection (see <a href="config-ssh-encryption.html#S4.20">section 4.20</a>).
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

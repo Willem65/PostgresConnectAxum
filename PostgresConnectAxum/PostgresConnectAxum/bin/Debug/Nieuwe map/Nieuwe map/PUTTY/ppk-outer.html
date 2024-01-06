@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Outer layer</title>
+<link rel="previous" href="ppk-overview.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="ppk-privkeys.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="SC.2"></a>C.2 Outer layer</h1>
+<p>
+The outer layer of a PPK file is text-based. The PuTTY tools will always use LF line termination when writing PPK files, but will tolerate CR+LF and CR-only on input.
+</p>
+<p>
+The first few lines identify it as a PPK, and give some initial data about what's stored in it and how. They look like this:
+</p>
+<pre><code>PuTTY-User-Key-File-<b>version</b>: <b>algorithm-name</b>
+Encryption: <b>encryption-type</b>
+Comment: <b>key-comment-string</b>
+</code></pre>
+<p>
+<strong>version</strong> is a decimal number giving the version number of the file format itself. The current file format version is 3.
+</p>
+<p>
+<strong>algorithm-name</strong> is the SSH protocol identifier for the public key algorithm that this key is used for (such as &#8216;<code>ssh-dss</code>&#8217; or &#8216;<code>ecdsa-sha2-nistp384</code>&#8217;).
+</p>
+<p>
+<strong>encryption-type</strong> indicates whether this key is stored encrypted, and if so, by what method. Currently the only supported encryption types are &#8216;<code>aes256-cbc</code>&#8217; and &#8216;<code>none</code>&#8217;.
+</p>
+<p>
+<strong>key-comment-string</strong> is a free text field giving the comment. This can contain any byte values other than 13 and 10 (CR and LF).
+</p>
+<p>
+The next part of the file gives the public key. This is stored unencrypted but base64-encoded (<a href="https://www.rfc-editor.org/rfc/rfc4648">RFC 4648</a>), and is preceded by a header line saying how many lines of base64 data are shown, looking like this:
+</p>
+<pre><code>Public-Lines: <b>number-of-lines</b>
+<b>that many lines of base64 data</b>
+</code></pre>
+<p>
+The base64-encoded data in this blob is formatted in exactly the same way as an SSH public key sent over the wire in the SSH protocol itself. That is also the same format as the base64 data stored in OpenSSH's <code>authorized_keys</code> file, except that in a PPK file the base64 data is split across multiple lines. But if you remove the newlines from the middle of this section, the resulting base64 blob is in the right format to go in an <code>authorized_keys</code> line.
+</p>
+<p>
+If the key is encrypted (i.e. <strong>encryption-type</strong> is not &#8216;<code>none</code>&#8217;), then the next thing that appears is a sequence of lines specifying how the keys for encrypting the file are to be derived from the passphrase:
+</p>
+<pre><code>Key-Derivation: <b>argon2-flavour</b>
+Argon2-Memory: <b>decimal-integer</b>
+Argon2-Passes: <b>decimal-integer</b>
+Argon2-Parallelism: <b>decimal-integer</b>
+Argon2-Salt: <b>hex-string</b>
+</code></pre>
+<p>
+<strong>argon2-flavour</strong> is one of the identifiers &#8216;<code>Argon2d</code>&#8217;, &#8216;<code>Argon2i</code>&#8217; or &#8216;<code>Argon2id</code>&#8217;, all describing variants of the Argon2 password-hashing function.
+</p>
+<p>
+The three integer values are used as parameters for Argon2, which allows you to configure the amount of memory used (in Kbyte), the number of passes of the algorithm to run (to tune its running time), and the degree of parallelism required by the hash function. The salt is decoded into a sequence of binary bytes and used as an additional input to Argon2. (It is chosen randomly when the key file is written, so that a guessing attack can't be mounted in parallel against multiple key files.)
+</p>
+<p>
+The next part of the file gives the private key. This is base64-encoded in the same way:
+</p>
+<pre><code>Private-Lines: <b>number-of-lines</b>
+<b>that many lines of base64 data</b>
+</code></pre>
+<p>
+The binary data represented in this base64 blob may be encrypted, depending on the <em>encryption-type</em> field in the key file header shown above:
+</p>
+<ul><li>
+If <strong>encryption-type</strong> is &#8216;<code>none</code>&#8217;, then this data is stored in plain text.
+</li>
+<li>
+If <strong>encryption-type</strong> is &#8216;<code>aes256-cbc</code>&#8217;, then this data is encrypted using AES, with a 256-bit key length, in the CBC cipher mode. The key and initialisation vector are derived from the passphrase: see <a href="ppk-keys.html#SC.4">section C.4</a>.
+<p>
+In order to encrypt the private key data with AES, it must be a multiple of 16 bytes (the AES cipher block length). This is achieved by appending random padding to the data before encrypting it. When decoding it after decryption, the random data can be ignored: the internal structure of the data is enough to tell you when you've reached the end of the meaningful part.
+</p>
+
+</li>
+</ul>
+<p>
+Unlike public keys, the binary encoding of private keys is not specified at all in the SSH standards. See <a href="ppk-privkeys.html#SC.3">section C.3</a> for details of the private key format for each key type supported by PuTTY.
+</p>
+<p>
+The final thing in the key file is the MAC:
+</p>
+<pre><code>Private-MAC: <b>hex-mac-data</b>
+</code></pre>
+<p>
+<strong>hex-mac-data</strong> is a hexadecimal-encoded value, 64 digits long (i.e. 32 bytes), generated using the HMAC-SHA-256 algorithm with the following binary data as input:
+</p>
+<ul><li>
+<code>string</code>: the <strong>algorithm-name</strong> header field.
+</li>
+<li>
+<code>string</code>: the <strong>encryption-type</strong> header field.
+</li>
+<li>
+<code>string</code>: the <strong>key-comment-string</strong> header field.
+</li>
+<li>
+<code>string</code>: the binary public key data, as decoded from the base64 lines after the &#8216;<code>Public-Lines</code>&#8217; header.
+</li>
+<li>
+<code>string</code>: the plaintext of the binary private key data, as decoded from the base64 lines after the &#8216;<code>Private-Lines</code>&#8217; header. If that data was stored encrypted, then the decrypted version of it is used in this MAC preimage, <em>including</em> the random padding mentioned above.
+</li>
+</ul>
+<p>
+The MAC key is derived from the passphrase: see <a href="ppk-keys.html#SC.4">section C.4</a>.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

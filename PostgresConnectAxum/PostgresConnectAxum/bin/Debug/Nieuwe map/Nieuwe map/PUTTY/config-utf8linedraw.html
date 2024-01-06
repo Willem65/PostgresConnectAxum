@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Combining VT100 line-drawing with UTF-8</title>
+<link rel="previous" href="config-linedrawpaste.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="config-selection.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S4.10.6"></a>4.10.6 Combining VT100 line-drawing with UTF-8</h1>
+<p>
+If PuTTY is configured to treat data from the server as encoded in UTF-8, then by default it disables the older VT100-style system of control sequences that cause the lower-case letters to be temporarily replaced by line drawing characters.
+</p>
+<p>
+The rationale is that in UTF-8 mode you don't need those control sequences anyway, because all the line-drawing characters they access are available as Unicode characters already, so there's no need for applications to put the terminal into a special state to get at them.
+</p>
+<p>
+Also, it removes a risk of the terminal <em>accidentally</em> getting into that state: if you accidentally write uncontrolled binary data to a non-UTF-8 terminal, it can be surprisingly common to find that your next shell prompt appears as a sequence of line-drawing characters and then you have to remember or look up how to get out of that mode. So by default, UTF-8 mode simply doesn't <em>have</em> a confusing mode like that to get into, accidentally or on purpose.
+</p>
+<p>
+However, not all applications will see it that way. Even UTF-8 terminal users will still sometimes have to run software that tries to print line-drawing characters in the old-fashioned way. So the configuration option &#8216;Enable VT100 line drawing even in UTF-8 mode&#8217; puts PuTTY into a hybrid mode in which it understands the VT100-style control sequences that change the meaning of the ASCII lower case letters, <em>and</em> understands UTF-8.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

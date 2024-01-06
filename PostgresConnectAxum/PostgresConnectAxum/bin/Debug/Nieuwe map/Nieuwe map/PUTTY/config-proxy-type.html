@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Setting the proxy type</title>
+<link rel="previous" href="config-proxy.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="config-proxy-exclude.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S4.16.1"></a>4.16.1 Setting the proxy type</h1>
+<p>
+The &#8216;Proxy type&#8217; drop-down allows you to configure what type of proxy you want PuTTY to use for its network connections. The default setting is &#8216;None&#8217;; in this mode no proxy is used for any connection.
+</p>
+<ul><li>
+Selecting <a name="i0"></a>&#8216;HTTP CONNECT&#8217; allows you to proxy your connections through a web server supporting the HTTP <code>CONNECT</code> command, as documented in <a href="https://www.rfc-editor.org/rfc/rfc2817">RFC 2817</a>.
+</li>
+<li>
+Selecting &#8216;SOCKS 4&#8217; or &#8216;SOCKS 5&#8217; allows you to proxy your connections through a <a name="i1"></a>SOCKS server.
+</li>
+<li>
+Many firewalls implement a less formal type of proxy in which a user can make a Telnet or TCP connection directly to the firewall machine and enter a command such as <code>connect myhost.com 22</code> to connect through to an external host. Selecting <a name="i2"></a>&#8216;Telnet&#8217; allows you to tell PuTTY to use this type of proxy, with the precise command specified as described in <a href="config-proxy-command.html#S4.16.5">section 4.16.5</a>.
+</li>
+<li>
+There are several ways to use a SSH server as a proxy. All of these cause PuTTY to make a secondary SSH connection to the proxy host (sometimes called a &#8216;<a name="i3"></a>jump host&#8217; in this context).
+<p>
+The &#8216;Proxy hostname&#8217; field will be interpreted as the name of a PuTTY saved session if one exists, or a hostname if not. This allows multi-hop jump paths, if the referenced saved session is itself configured to use an SSH proxy; and it allows combining SSH and non-SSH proxying.
+</p>
+<ul><li>
+&#8216;SSH to proxy and use port forwarding&#8217; causes PuTTY to use the secondary SSH connection to open a port-forwarding channel to the final destination host (similar to OpenSSH's <code>-J</code> option).
+</li>
+<li>
+&#8216;SSH to proxy and execute a command&#8217; causes PuTTY to run an arbitrary remote command on the proxy SSH server and use that command's standard input and output streams to run the primary connection over. The remote command line is specified as described in <a href="config-proxy-command.html#S4.16.5">section 4.16.5</a>.
+</li>
+<li>
+&#8216;SSH to proxy and invoke a subsystem&#8217; is similar but causes PuTTY to start an SSH &#8216;<a name="i4"></a>subsystem&#8217; rather than an ordinary command line. This might be useful with a specially set up SSH proxy server. 
+</li>
+</ul>
+
+</li>
+<li>
+Selecting <a name="i5"></a>&#8216;Local&#8217; allows you to specify an arbitrary command on the local machine to act as a proxy. When the session is started, instead of creating a TCP connection, PuTTY runs the command (specified in <a href="config-proxy-command.html#S4.16.5">section 4.16.5</a>), and uses its standard input and output streams.
+<p>
+This could be used, for instance, to talk to some kind of network proxy that PuTTY does not natively support; or you could tunnel a connection over something other than TCP/IP entirely.
+</p>
+<p>
+You can also enable this mode on the command line; see <a href="using-cmdline-proxycmd.html#S3.11.3.27">section 3.11.3.27</a>. 
+</p>
+
+</li>
+</ul>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

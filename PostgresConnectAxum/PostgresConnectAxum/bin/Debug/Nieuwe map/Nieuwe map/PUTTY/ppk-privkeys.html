@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Private key encodings</title>
+<link rel="previous" href="ppk-outer.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="ppk-privkey-rsa.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="SC.3"></a>C.3 Private key encodings</h1>
+<p>
+This section describes the private key format for each key type supported by PuTTY.
+</p>
+<p>
+Because the PPK format also contains the public key (and both public and private key are protected by the same MAC to ensure they can't be made inconsistent), there is no need for the private key section of the file to repeat data from the public section. So some of these formats are very short.
+</p>
+<p>
+In all cases, a decoding application can begin reading from the start of the decrypted private key data, and know when it has read all that it needs. This allows random padding after the meaningful data to be safely ignored.
+</p>
+
+<ul>
+<li><a href="ppk-privkey-rsa.html#SC.3.1">C.3.1 RSA</a></li>
+<li><a href="ppk-privkey-dsa.html#SC.3.2">C.3.2 DSA</a></li>
+<li><a href="ppk-privkey-ecdsa.html#SC.3.3">C.3.3 NIST elliptic-curve keys</a></li>
+<li><a href="ppk-privkey-eddsa.html#SC.3.4">C.3.4 EdDSA elliptic-curve keys (Ed25519 and Ed448)</a></li>
+</ul>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

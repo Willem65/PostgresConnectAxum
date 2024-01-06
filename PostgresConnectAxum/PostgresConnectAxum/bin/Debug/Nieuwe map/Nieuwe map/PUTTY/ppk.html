@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>PPK file format</title>
+<link rel="previous" href="feedback-address.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="ppk-overview.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="AC"></a>Appendix C: PPK file format</h1>
+<p>
+This appendix documents the file format used by PuTTY to store private keys.
+</p>
+<p>
+In this appendix, binary data structures are described using data type representations such as &#8216;<code>uint32</code>&#8217;, &#8216;<code>string</code>&#8217; and &#8216;<code>mpint</code>&#8217; as used in the SSH protocol standards themselves. These are defined authoritatively by <a href="https://www.rfc-editor.org/rfc/rfc4251#section-5">RFC 4251 section 5</a>, &#8216;Data Type Representations Used in the SSH Protocols&#8217;.
+</p>
+
+<ul>
+<li><a href="ppk-overview.html#SC.1">C.1 Overview</a></li>
+<li><a href="ppk-outer.html#SC.2">C.2 Outer layer</a></li>
+<li><a href="ppk-privkeys.html#SC.3">C.3 Private key encodings</a>
+<ul>
+<li><a href="ppk-privkey-rsa.html#SC.3.1">C.3.1 RSA</a></li>
+<li><a href="ppk-privkey-dsa.html#SC.3.2">C.3.2 DSA</a></li>
+<li><a href="ppk-privkey-ecdsa.html#SC.3.3">C.3.3 NIST elliptic-curve keys</a></li>
+<li><a href="ppk-privkey-eddsa.html#SC.3.4">C.3.4 EdDSA elliptic-curve keys (Ed25519 and Ed448)</a></li>
+</ul></li>
+<li><a href="ppk-keys.html#SC.4">C.4 Key derivation</a></li>
+<li><a href="ppk-old.html#SC.5">C.5 Older versions of the PPK format</a>
+<ul>
+<li><a href="ppk-v2.html#SC.5.1">C.5.1 Version 2</a></li>
+<li><a href="ppk-v1.html#SC.5.2">C.5.2 Version 1</a></li>
+</ul></li>
+</ul>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

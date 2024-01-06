@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>&#8216;Discards data sent before its greeting&#8217;</title>
+<link rel="previous" href="config-ssh-bug-maxpkt2.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="config-ssh-bug-filter-kexinit.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S4.27.6"></a>4.27.6 &#8216;Discards data sent before its greeting&#8217;</h1>
+<p>
+Just occasionally, an SSH connection can be established over some channel that will accidentally discard outgoing data very early in the connection.
+</p>
+<p>
+This is not typically seen as a bug in an actual SSH server, but it can sometimes occur in situations involving a complicated proxy process. An example is <a href="https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=991958">Debian bug #991958</a>, in which a connection going over the console of a User Mode Linux kernel can lose outgoing data before the kernel has fully booted.
+</p>
+<p>
+You can work around this problem by manually enabling this bug flag, which will cause PuTTY to wait to send its initial SSH greeting until after it sees the greeting from the server.
+</p>
+<p>
+Note that this bug flag can never be automatically detected, since auto-detection relies on the version string in the server's greeting, and PuTTY has to decide whether to expect this bug <em>before</em> it sees the server's greeting. So this is a manual workaround only.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>&#8216;Disconnect if authentication succeeds trivially&#8217;</title>
+<link rel="previous" href="config-ssh-noauth.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="config-ssh-tryagent.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S4.21.3"></a>4.21.3 &#8216;Disconnect if authentication succeeds trivially&#8217;</h1>
+<p>
+This option causes PuTTY to abandon an SSH session and disconnect from the server, if the server accepted authentication without ever having asked for any kind of password or signature or token.
+</p>
+<p>
+This might be used as a security measure. There are some forms of attack against an SSH client user which work by terminating the SSH authentication stage early, and then doing something in the main part of the SSH session which <em>looks</em> like part of the authentication, but isn't really.
+</p>
+<p>
+For example, instead of demanding a signature from your public key, for which PuTTY would ask for your key's passphrase, a compromised or malicious server might allow you to log in with no signature or password at all, and then print a message that <em>imitates</em> PuTTY's request for your passphrase, in the hope that you would type it in. (In fact, the passphrase for your public key should not be sent to any server.)
+</p>
+<p>
+PuTTY's main defence against attacks of this type is the &#8216;trust sigil&#8217; system: messages in the PuTTY window that are truly originated by PuTTY itself are shown next to a small copy of the PuTTY icon, which the server cannot fake when it tries to imitate the same message using terminal output.
+</p>
+<p>
+However, if you think you might be at risk of this kind of thing anyway (if you don't watch closely for the trust sigils, or if you think you're at extra risk of one of your servers being malicious), then you could enable this option as an extra defence. Then, if the server tries any of these attacks involving letting you through the authentication stage, PuTTY will disconnect from the server before it can send a follow-up fake prompt or other type of attack.
+</p>
+<p>
+On the other hand, some servers <em>legitimately</em> let you through the SSH authentication phase trivially, either because they are genuinely public, or because the important authentication step happens during the terminal session. (An example might be an SSH server that connects you directly to the terminal login prompt of a legacy mainframe.) So enabling this option might cause some kinds of session to stop working. It's up to you.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

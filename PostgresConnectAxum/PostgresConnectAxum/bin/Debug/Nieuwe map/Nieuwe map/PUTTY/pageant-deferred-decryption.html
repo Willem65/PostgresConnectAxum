@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Loading keys without decrypting them</title>
+<link rel="previous" href="pageant-forward.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="pageant-security.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S9.5"></a>9.5 Loading keys without decrypting them</h1>
+<p>
+You can add keys to Pageant <em>without</em> decrypting them. The key file will be held in Pageant's memory still encrypted, and when a client program first tries to use the key, Pageant will display a dialog box prompting for the passphrase so that the key can be decrypted.
+</p>
+<p>
+This works the same way whether the key is used by an instance of PuTTY running locally, or a remote client connecting to Pageant through agent forwarding.
+</p>
+<p>
+To add a key to Pageant in this encrypted form, press the &#8216;Add Key (encrypted)&#8217; button in the Pageant main window, or alternatively right-click on the Pageant icon in the system tray and select &#8216;Add Key (encrypted)&#8217; from there. Pageant will bring up a file dialog, in just the same way as it would for the plain &#8216;Add Key&#8217; button. But it won't ask for a passphrase. Instead, the key will be listed in the main window with &#8216;(encrypted)&#8217; after it.
+</p>
+<p>
+To start Pageant up in the first place with encrypted keys loaded into it, you can use the &#8216;<code>--encrypted</code>&#8217; option on the command line. For example:
+</p>
+<pre><code>C:\PuTTY\pageant.exe --encrypted d:\main.ppk
+</code></pre>
+<p>
+After a key has been decrypted for the first use, it remains decrypted, so that it can be used again. The main window will list the key with &#8216;(<a name="i0"></a>re-encryptable)&#8217; after it. You can revert it to the previous state, where a passphrase is required, using the &#8216;<a name="i1"></a>Re-encrypt&#8217; button in the Pageant main window.
+</p>
+<p>
+You can also &#8216;re-encrypt&#8217; all keys that were added encrypted by choosing &#8216;Re-encrypt All Keys&#8217; from the System tray menu. (Note that this does <em>not</em> discard cleartext keys that were not previously added encrypted!)
+</p>
+<p>
+<strong>CAUTION</strong>: When Pageant displays a prompt to decrypt an already-loaded key, it cannot give keyboard focus to the prompt dialog box. As far as I know this is a deliberate defensive measure by Windows, against malicious software. So make sure you click in the prompt window before typing your passphrase, or else the passphrase might be sent to somewhere you didn't want to trust with it!
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>PLUGIN_KI_SERVER_REQUEST</title>
+<link rel="previous" href="PLUGIN_PROTOCOL_ACCEPT.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="PLUGIN_KI_SERVER_RESPONSE.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="SH.6.7"></a>H.6.7 <code>PLUGIN_KI_SERVER_REQUEST</code></h1>
+<p>
+<strong>Direction</strong>: client to plugin
+</p>
+<p>
+<strong>When</strong>: sent after <code>PLUGIN_PROTOCOL</code>, or after a previous <code>PLUGIN_KI_SERVER_RESPONSE</code>, when the SSH server has sent <code>SSH_MSG_USERAUTH_INFO_REQUEST</code>
+</p>
+<p>
+<strong>What happens next</strong>: the plugin will send either <code>PLUGIN_KI_USER_REQUEST</code> or <code>PLUGIN_KI_SERVER_RESPONSE</code>
+</p>
+<p>
+<strong>Message contents after the type code</strong>: the exact contents of the <code>SSH_MSG_USERAUTH_INFO_REQUEST</code> just sent by the server. See <a href="authplugin-refs.html#p1">[RFC4256]</a> section 3.2 for details. The summary:
+</p>
+<ul><li>
+<strong>string</strong>: name of this prompt collection (e.g. to use as a dialog-box title)
+</li>
+<li>
+<strong>string</strong>: instructions to be displayed before this prompt collection
+</li>
+<li>
+<strong>string</strong>: language tag (deprecated)
+</li>
+<li>
+<strong>uint32</strong>: number of prompts in this collection
+</li>
+<li>
+That many copies of:
+<ul><li>
+<strong>string</strong>: prompt (in UTF-8)
+</li>
+<li>
+<strong>boolean</strong>: whether the response to this prompt is safe to echo to the screen
+</li>
+</ul>
+
+</li>
+</ul>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Selecting the prime generation method</title>
+<link rel="previous" href="puttygen-strength.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="puttygen-generate.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S8.2.4"></a>8.2.4 Selecting the <a name="i0"></a>prime generation method</h1>
+<p>
+(This is entirely optional. Unless you know better, it's entirely sensible to skip this and use the default settings.)
+</p>
+<p>
+On the &#8216;Key&#8217; menu, you can also optionally change the method for generating the prime numbers used in the generated key. This is used for RSA and DSA keys only. (The other key types don't require generating prime numbers at all.)
+</p>
+<p>
+The prime-generation method does not affect compatibility: a key generated with any of these methods will still work with all the same SSH servers.
+</p>
+<p>
+The available methods are:
+</p>
+<ul><li>
+Use <a name="i1"></a>probable primes (fast)
+</li>
+<li>
+Use <a name="i2"></a>proven primes (slower)
+</li>
+<li>
+Use proven primes with even distribution (slowest)
+</li>
+</ul>
+<p>
+The &#8216;probable primes&#8217; method sounds unsafe, but it's the most commonly used prime-generation strategy. There is in theory a possibility that it might accidentally generate a number that isn't prime, but the software does enough checking to make that probability vanishingly small (less than 1 in 2^80, or 1 in 10^24). So, in practice, nobody worries about it very much.
+</p>
+<p>
+The other methods cause PuTTYgen to use numbers that it is <em>sure</em> are prime, because it generates the output number together with a proof of its primality. This takes more effort, but it eliminates that theoretical risk in the probabilistic method.
+</p>
+<p>
+There in one way in which PuTTYgen's &#8216;proven primes&#8217; method is not strictly better than its &#8216;probable primes&#8217; method. If you use PuTTYgen to generate an RSA key on a computer that is potentially susceptible to timing- or cache-based <a name="i3"></a>side-channel attacks, such as a shared computer, the &#8216;probable primes&#8217; method is designed to resist such attacks, whereas the &#8216;proven primes&#8217; methods are not. (This is only a concern for RSA keys; for other key types, primes are either not secret or not involved.)
+</p>
+<p>
+You might choose to switch from probable to proven primes if you have a local security standard that demands it, or if you don't trust the probabilistic argument for the safety of the usual method.
+</p>
+<p>
+For RSA keys, there's also an option on the &#8216;Key&#8217; menu to use <a name="i4"></a>&#8216;strong&#8217; primes as the prime factors of the public key. A &#8216;strong&#8217; prime is a prime number chosen to have a particular structure that makes certain factoring algorithms more difficult to apply, so some security standards recommend their use. However, the most modern factoring algorithms are unaffected, so this option is probably not worth turning on <em>unless</em> you have a local standard that recommends it.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

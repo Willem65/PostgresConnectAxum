@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Connecting using the Rlogin protocol</title>
+<link rel="previous" href="using-telnet.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="using-supdup.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S3.9"></a>3.9 Connecting using the <a name="i0"></a>Rlogin protocol</h1>
+<p>
+PuTTY can use the Rlogin protocol to connect to a server.
+</p>
+<p>
+Rlogin was similar to Telnet in concept, but more focused on connections between Unix machines. It supported a feature for passwordless login, based on use of &#8216;privileged ports&#8217; (ports with numbers below 1024, which Unix traditionally does not allow users other than <code>root</code> to allocate). Ultimately, based on the server trusting that the client's IP address was owned by the Unix machine it claimed to be, and that that machine would guard its privileged ports appropriately.
+</p>
+<p>
+Like Telnet, Rlogin runs over an unsecured network connection.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

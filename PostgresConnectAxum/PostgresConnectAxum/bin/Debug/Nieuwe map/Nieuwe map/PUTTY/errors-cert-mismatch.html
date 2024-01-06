@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>&#8216;This server presented a certified host key which was signed by a different certification authority ...&#8217;</title>
+<link rel="previous" href="errors-hostkey-wrong.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="errors-ssh-protocol.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S10.3"></a>10.3 &#8216;This server presented a certified host key which was signed by a different certification authority ...&#8217;</h1>
+<p>
+If you've configured PuTTY to trust at least one <a name="i0"></a>certification authority for signing host keys (see <a href="config-ssh-kex-cert.html#S4.19.4">section 4.19.4</a>), then it will ask the SSH server to send it any available certified host keys. If the server sends back a certified key signed by a <em>different</em> certification authority, PuTTY will present this variant of the host key prompt, preceded by &#8216;WARNING - POTENTIAL SECURITY BREACH!&#8217;
+</p>
+<p>
+One reason why this can happen is a deliberate attack. Just like an ordinary man-in-the-middle attack which substitutes a wrong host key, a particularly ambitious attacker might substitute an entire wrong certification authority, and hope that you connect anyway.
+</p>
+<p>
+But it's also possible in some situations that this error might arise legitimately. For example, if your organisation's IT department has just rolled out a new CA key which you haven't yet entered in PuTTY's configuration, or if your CA configuration involves two overlapping domains, or something similar.
+</p>
+<p>
+So, unfortunately, you'll have to work out what to do about it yourself: make an exception for this specific case, or abandon this connection and install a new CA key before trying again (if you're really sure you trust the CA), or edit your configuration in some other way, or just stop trying to use this server.
+</p>
+<p>
+If you're convinced that this particular server is legitimate even though the CA is not one you trust, PuTTY will let you cache the certified host key, treating it in the same way as an uncertified one. Then that particular certificate will be accepted for future connections to this specific server, even though other certificates signed by the same CA will still be rejected.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

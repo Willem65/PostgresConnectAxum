@@ -1,0 +1,214 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Explicit vtable structures to implement traits</title>
+<link rel="previous" href="udp-ssh-coroutines.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="udp-perfection.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="SE.12"></a>E.12 Explicit vtable structures to implement traits</h1>
+<p>
+A lot of PuTTY's code is written in a style that looks structurally rather like an object-oriented language, in spite of PuTTY being a pure C program.
+</p>
+<p>
+For example, there's a single data type called <code>ssh_hash</code>, which is an abstraction of a secure hash function, and a bunch of functions called things like <code>ssh_hash_</code><em>foo</em> that do things with those data types. But in fact, PuTTY supports many different hash functions, and each one has to provide its own implementation of those functions.
+</p>
+<p>
+In C++ terms, this is rather like having a single abstract base class, and multiple concrete subclasses of it, each of which fills in all the pure virtual methods in a way that's compatible with the data fields of the subclass. The implementation is more or less the same, as well: in C, we do explicitly in the source code what the C++ compiler will be doing behind the scenes at compile time.
+</p>
+<p>
+But perhaps a closer analogy in functional terms is the Rust concept of a &#8216;trait&#8217;, or the Java idea of an &#8216;interface&#8217;. C++ supports a multi-level hierarchy of inheritance, whereas PuTTY's system &#8211; like traits or interfaces &#8211; has only two levels, one describing a generic object of a type (e.g. a hash function) and another describing a specific implementation of that type (e.g. SHA-256).
+</p>
+<p>
+The PuTTY code base has a standard idiom for doing this in C, as follows.
+</p>
+<p>
+Firstly, we define two <code>struct</code> types for our trait. One of them describes a particular <em>kind</em> of implementation of that trait, and it's full of (mostly) function pointers. The other describes a specific <em>instance</em> of an implementation of that trait, and it will contain a pointer to a <code>const</code> instance of the first type. For example:
+</p>
+<pre><code>typedef struct MyAbstraction MyAbstraction;
+typedef struct MyAbstractionVtable MyAbstractionVtable;
+
+struct MyAbstractionVtable {
+    MyAbstraction *(*new)(const MyAbstractionVtable *vt);
+    void (*free)(MyAbstraction *);
+    void (*modify)(MyAbstraction *, unsigned some_parameter);
+    unsigned (*query)(MyAbstraction *, unsigned some_parameter);
+};
+
+struct MyAbstraction {
+    const MyAbstractionVtable *vt;
+};
+</code></pre>
+<p>
+Here, we imagine that <code>MyAbstraction</code> might be some kind of object that contains mutable state. The associated vtable structure shows what operations you can perform on a <code>MyAbstraction</code>: you can create one (dynamically allocated), free one you already have, or call the example methods &#8216;modify&#8217; (to change the state of the object in some way) and &#8216;query&#8217; (to return some value derived from the object's current state).
+</p>
+<p>
+(In most cases, the vtable structure has a name ending in &#8216;<code>vtable</code>&#8217;. But for historical reasons a lot of the crypto primitives that use this scheme &#8211; ciphers, hash functions, public key methods and so on &#8211; instead have names ending in &#8216;<code>alg</code>&#8217;, on the basis that the primitives they implement are often referred to as &#8216;encryption algorithms&#8217;, &#8216;hash algorithms&#8217; and so forth.)
+</p>
+<p>
+Now, to define a concrete instance of this trait, you'd define a <code>struct</code> that contains a <code>MyAbstraction</code> field, plus any other data it might need:
+</p>
+<pre><code>struct MyImplementation {
+    unsigned internal_data[16];
+    SomeOtherType *dynamic_subthing;
+
+    MyAbstraction myabs;
+};
+</code></pre>
+<p>
+Next, you'd implement all the necessary methods for that implementation of the trait, in this kind of style:
+</p>
+<pre><code>static MyAbstraction *myimpl_new(const MyAbstractionVtable *vt)
+{
+    MyImplementation *impl = snew(MyImplementation);
+    memset(impl, 0, sizeof(*impl));
+    impl-&gt;dynamic_subthing = allocate_some_other_type();
+    impl-&gt;myabs.vt = vt;
+    return &amp;impl-&gt;myabs;
+}
+
+static void myimpl_free(MyAbstraction *myabs)
+{
+    MyImplementation *impl = container_of(myabs, MyImplementation, myabs);
+    free_other_type(impl-&gt;dynamic_subthing);
+    sfree(impl);
+}
+
+static void myimpl_modify(MyAbstraction *myabs, unsigned param)
+{
+    MyImplementation *impl = container_of(myabs, MyImplementation, myabs);
+    impl-&gt;internal_data[param] += do_something_with(impl-&gt;dynamic_subthing);
+}
+
+static unsigned myimpl_query(MyAbstraction *myabs, unsigned param)
+{
+    MyImplementation *impl = container_of(myabs, MyImplementation, myabs);
+    return impl-&gt;internal_data[param];
+}
+</code></pre>
+<p>
+Having defined those methods, now we can define a <code>const</code> instance of the vtable structure containing pointers to them:
+</p>
+<pre><code>const MyAbstractionVtable MyImplementation_vt = {
+    .new = myimpl_new,
+    .free = myimpl_free,
+    .modify = myimpl_modify,
+    .query = myimpl_query,
+};
+</code></pre>
+<p>
+<em>In principle</em>, this is all you need. Client code can construct a new instance of a particular implementation of <code>MyAbstraction</code> by digging out the <code>new</code> method from the vtable and calling it (with the vtable itself as a parameter), which returns a <code>MyAbstraction *</code> pointer that identifies a newly created instance, in which the <code>vt</code> field will contain a pointer to the same vtable structure you passed in. And once you have an instance object, say <code>MyAbstraction *myabs</code>, you can dig out one of the other method pointers from the vtable it points to, and call that, passing the object itself as a parameter.
+</p>
+<p>
+But in fact, we don't do that, because it looks pretty ugly at all the call sites. Instead, what we generally do in this code base is to write a set of <code>static inline</code> wrapper functions in the same header file that defined the <code>MyAbstraction</code> structure types, like this:
+</p>
+<pre><code>static inline MyAbstraction *myabs_new(const MyAbstractionVtable *vt)
+{ return vt-&gt;new(vt); }
+static inline void myabs_free(MyAbstraction *myabs)
+{ myabs-&gt;vt-&gt;free(myabs); }
+static inline void myimpl_modify(MyAbstraction *myabs, unsigned param)
+{ myabs-&gt;vt-&gt;modify(myabs, param); }
+static inline unsigned myimpl_query(MyAbstraction *myabs, unsigned param)
+{ return myabs-&gt;vt-&gt;query(myabs, param); }
+</code></pre>
+<p>
+And now call sites can use those reasonably clean-looking wrapper functions, and shouldn't ever have to directly refer to the <code>vt</code> field inside any <code>myabs</code> object they're holding. For example, you might write something like this:
+</p>
+<pre><code>MyAbstraction *myabs = myabs_new(&amp;MyImplementation_vtable);
+myabs_update(myabs, 10);
+unsigned output = myabs_query(myabs, 2);
+myabs_free(myabs);
+</code></pre>
+<p>
+and then all this code can use a different implementation of the same abstraction by just changing which vtable pointer it passed in in the first line.
+</p>
+<p>
+Some things to note about this system:
+</p>
+<ul><li>
+The implementation instance type (here &#8216;<code>MyImplementation</code>&#8217; contains the abstraction type (&#8216;<code>MyAbstraction</code>&#8217;) as one of its fields. But that field is not necessarily at the start of the structure. So you can't just <em>cast</em> pointers back and forth between the two types. Instead:
+<ul><li>
+You &#8216;up-cast&#8217; from implementation to abstraction by taking the address of the <code>MyAbstraction</code> field. You can see the example <code>new</code> method above doing this, returning <code>&amp;impl-&gt;myabs</code>. All <code>new</code> methods do this on return.
+</li>
+<li>
+Going in the other direction, each method that was passed a generic <code>MyAbstraction *myabs</code> parameter has to recover a pointer to the specific implementation type <code>MyImplementation *impl</code>. The idiom for doing that is to use the &#8216;<code>container_of</code>&#8217; macro, also seen in the Linux kernel code. Generally, <code>container_of(p, Type, field)</code> says: &#8216;I'm confident that the pointer value &#8216;<code>p</code>&#8217; is pointing to the field called &#8216;<code>field</code>&#8217; within a larger <code>struct</code> of type <code>Type</code>. Please return me the pointer to the containing structure.&#8217; So in this case, we take the &#8216;<code>myabs</code>&#8217; pointer passed to the function, and &#8216;down-cast&#8217; it into a pointer to the larger and more specific structure type <code>MyImplementation</code>, by adjusting the pointer value based on the offset within that structure of the field called &#8216;<code>myabs</code>&#8217;.
+</li>
+</ul>
+<p>
+This system is flexible enough to permit &#8216;multiple inheritance&#8217;, or rather, multiple <em>implementation</em>: having one object type implement more than one trait. For example, the <code>ProxySocket</code> type implements both the <code>Socket</code> trait and the <code>Plug</code> trait that connects to it, because it has to act as an adapter between another instance of each of those types.
+</p>
+<p>
+It's also perfectly possible to have the same object implement the <em>same</em> trait in two different ways. At the time of writing this I can't think of any case where we actually do this, but a theoretical example might be if you needed to support a trait like <code>Comparable</code> in two ways that sorted by different criteria. There would be no difficulty doing this in the PuTTY system: simply have your implementation <code>struct</code> contain two (or more) fields of the same abstraction type. The fields will have different names, which makes it easy to explicitly specify which one you're returning a pointer to during up-casting, or which one you're down-casting from using <code>container_of</code>. And then both sets of implementation methods can recover a pointer to the same containing structure.
+</p>
+
+</li>
+<li>
+Unlike in C++, all objects in PuTTY that use this system are dynamically allocated. The &#8216;constructor&#8217; functions (whether they're virtualised across the whole abstraction or specific to each implementation) always allocate memory and return a pointer to it. The &#8216;free&#8217; method (our analogue of a destructor) always expects the input pointer to be dynamically allocated, and frees it. As a result, client code doesn't need to know how large the implementing object type is, because it will never need to allocate it (on the stack or anywhere else).
+</li>
+<li>
+Unlike in C++, the abstraction's &#8216;vtable&#8217; structure does not only hold methods that you can call on an instance object. It can also hold several other kinds of thing:
+<ul><li>
+Methods that you can call <em>without</em> an instance object, given only the vtable structure identifying a particular implementation of the trait. You might think of these as &#8216;static methods&#8217;, as in C++, except that they're <em>virtual</em> &#8211; the same code can call the static method of a different &#8216;class&#8217; given a different vtable pointer. So they're more like &#8216;virtual static methods&#8217;, which is a concept C++ doesn't have. An example is the <code>pubkey_bits</code> method in <code>ssh_keyalg</code>.
+</li>
+<li>
+The most important case of a &#8216;virtual static method&#8217; is the <code>new</code> method that allocates and returns a new object. You can think of it as a &#8216;virtual constructor&#8217; &#8211; another concept C++ doesn't have. (However, not all types need one of these: see below.)
+</li>
+<li>
+The vtable can also contain constant data relevant to the class as a whole &#8211; &#8216;virtual constant data&#8217;. For example, a cryptographic hash function will contain an integer field giving the length of the output hash, and most crypto primitives will contain a string field giving the identifier used in the SSH protocol that describes that primitive.
+</li>
+</ul>
+<p>
+The effect of all of this is that you can make other pieces of code able to use any instance of one of these types, by passing it an actual vtable as a parameter. For example, the <code>hash_simple</code> function takes an <code>ssh_hashalg</code> vtable pointer specifying any hash algorithm you like, and internally, it creates an object of that type, uses it, and frees it. In C++, you'd probably do this using a template, which would mean you had multiple specialisations of <code>hash_simple</code> &#8211; and then it would be much more difficult to decide <em>at run time</em> which one you needed to use. Here, <code>hash_simple</code> is still just one function, and you can decide as late as you like which vtable to pass to it.
+</p>
+
+</li>
+<li>
+The abstract <em>instance</em> structure can also contain publicly visible data fields (this time, usually treated as mutable) which are common to all implementations of the trait. For example, <code>BinaryPacketProtocol</code> has lots of these.
+</li>
+<li>
+Not all abstractions of this kind want virtual constructors. It depends on how different the implementations are.
+<p>
+With a crypto primitive like a hash algorithm, the constructor call looks the same for every implementing type, so it makes sense to have a standardised virtual constructor in the vtable and a <code>ssh_hash_new</code> wrapper function which can make an instance of whatever vtable you pass it. And then you make all the vtable objects themselves globally visible throughout the source code, so that any module can call (for example) <code>ssh_hash_new(&amp;ssh_sha256)</code>.
+</p>
+<p>
+But with other kinds of object, the constructor for each implementing type has to take a different set of parameters. For example, implementations of <code>Socket</code> are not generally interchangeable at construction time, because constructing different kinds of socket require totally different kinds of address parameter. In that situation, it makes more sense to keep the vtable structure itself private to the implementing source file, and instead, publish an ordinary constructing function that allocates and returns an instance of that particular subtype, taking whatever parameters are appropriate to that subtype.
+</p>
+
+</li>
+<li>
+If you do have virtual constructors, you can choose whether they take a vtable pointer as a parameter (as shown above), or an <em>existing</em> instance object. In the latter case, they can refer to the object itself as well as the vtable. For example, you could have a trait come with a virtual constructor called &#8216;clone&#8217;, meaning &#8216;Make a copy of this object, no matter which implementation it is.&#8217;
+</li>
+<li>
+Sometimes, a single vtable structure type can be shared between two completely different object types, and contain all the methods for both. For example, <code>ssh_compression_alg</code> contains methods to create, use and free <code>ssh_compressor</code> and <code>ssh_decompressor</code> objects, which are not interchangeable &#8211; but putting their methods in the same vtable means that it's easy to create a matching pair of objects that are compatible with each other.
+</li>
+<li>
+Passing the vtable itself as an argument to the <code>new</code> method is not compulsory: if a given <code>new</code> implementation is only used by a single vtable, then that function can simply hard-code the vtable pointer that it writes into the object it constructs. But passing the vtable is more flexible, because it allows a single constructor function to be shared between multiple slightly different object types. For example, SHA-384 and SHA-512 share the same <code>new</code> method and the same implementation data type, because they're very nearly the same hash algorithm &#8211; but a couple of the other methods in their vtables are different, because the &#8216;reset&#8217; function has to set up the initial algorithm state differently, and the &#8216;digest&#8217; method has to write out a different amount of data.
+<p>
+One practical advantage of having the <code>myabs_</code><em>foo</em> family of inline wrapper functions in the header file is that if you change your mind later about whether the vtable needs to be passed to <code>new</code>, you only have to update the <code>myabs_new</code> wrapper, and then the existing call sites won't need changing.
+</p>
+
+</li>
+<li>
+Another piece of &#8216;stunt object orientation&#8217; made possible by this scheme is that you can write two vtables that both use the same structure layout for the implementation object, and have an object <em>transform from one to the other</em> part way through its lifetime, by overwriting its own vtable pointer field. For example, the <code>sesschan</code> type that handles the server side of an SSH terminal session will sometimes transform in mid-lifetime into an SCP or SFTP file-transfer channel in this way, at the point where the client sends an &#8216;<code>exec</code>&#8217; or &#8216;<code>subsystem</code>&#8217; request that indicates that that's what it wants to do with the channel.
+<p>
+This concept would be difficult to arrange in C++. In Rust, it wouldn't even <em>make sense</em>, because in Rust, objects implementing a trait don't even contain a vtable pointer at all &#8211; instead, the &#8216;trait object&#8217; type (identifying a specific instance of some implementation of a given trait) consists of a pair of pointers, one to the object itself and one to the vtable. In that model, the only way you could make an existing object turn into a different trait would be to know where all the pointers to it were stored elsewhere in the program, and persuade all their owners to rewrite them.
+</p>
+
+</li>
+<li>
+Another stunt you can do is to have a vtable that doesn't have a corresponding implementation structure at all, because the only methods implemented in it are the constructors, and they always end up returning an implementation of some other vtable. For example, some of PuTTY's crypto primitives have a hardware-accelerated version and a pure software version, and decide at run time which one to use (based on whether the CPU they're running on supports the necessary acceleration instructions). So, for example, there are vtables for <code>ssh_sha256_sw</code> and <code>ssh_sha256_hw</code>, each of which has its own data layout and its own implementations of all the methods; and then there's a top-level vtable <code>ssh_sha256</code>, which only provides the &#8216;new&#8217; method, and implements it by calling the &#8216;new&#8217; method on one or other of the subtypes depending on what it finds out about the machine it's running on. That top-level selector vtable is nearly always the one used by client code. (Except for the test suite, which has to instantiate both of the subtypes in order to make sure they both pass the tests.)
+<p>
+As a result, the top-level selector vtable <code>ssh_sha256</code> doesn't need to implement any method that takes an <code>ssh_cipher *</code> parameter, because no <code>ssh_cipher</code> object is ever constructed whose <code>vt</code> field points to <code>&amp;ssh_sha256</code>: they all point to one of the other two full implementation vtables.
+</p>
+
+</li>
+</ul>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

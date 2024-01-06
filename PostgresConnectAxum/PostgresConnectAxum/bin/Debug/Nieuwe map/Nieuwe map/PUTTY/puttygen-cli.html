@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>PuTTYgen command-line configuration</title>
+<link rel="previous" href="puttygen-conversions.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="pubkey-gettingready.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S8.2.16"></a>8.2.16 PuTTYgen command-line configuration</h1>
+<p>
+PuTTYgen supports a set of command-line options to configure many of the same settings you can select in the GUI. This allows you to start it up with your own preferences ready-selected, which might be useful if you generate a lot of keys. (For example, you could make a Windows shortcut that runs PuTTYgen with some command line options, or a batch file or Powershell script that you could distribute to a whole organisation containing your local standards.)
+</p>
+<p>
+The options supported on the command line are:
+</p>
+<dl><dt>
+<code>-t</code> <em>keytype</em>
+</dt>
+<dd>
+Type of key to generate. You can select <code>rsa</code>, <code>dsa</code>, <code>ecdsa</code>, <code>eddsa</code>, <code>ed25519</code>, <code>ed448</code>, or <code>rsa1</code>. See <a href="puttygen-keytype.html#S8.2.2">section 8.2.2</a>.
+</dd>
+<dt>
+<code>-b</code> <em>bits</em>
+</dt>
+<dd>
+Size of the key to generate, in bits. See <a href="puttygen-strength.html#S8.2.3">section 8.2.3</a>.
+</dd>
+<dt>
+<code>--primes</code> <em>method</em>
+</dt>
+<dd>
+Method for generating prime numbers. You can select <code>probable</code>, <code>proven</code>, and <code>proven-even</code>. See <a href="puttygen-primes.html#S8.2.4">section 8.2.4</a>.
+</dd>
+<dt>
+<code>--strong-rsa</code>
+</dt>
+<dd>
+When generating an RSA key, make sure the prime factors of the key modulus are &#8216;strong primes&#8217;. See <a href="puttygen-primes.html#S8.2.4">section 8.2.4</a>.
+</dd>
+<dt>
+<code>--ppk-param</code> <em>key</em><code>=</code><em>value</em><code>,</code>...
+</dt>
+<dd>
+Allows setting all the same details of the PPK save file format described in <a href="puttygen-save-params.html#S8.2.13">section 8.2.13</a>.
+<p>
+Aspects to change are specified as a series of <em>key</em><code>=</code><em>value</em> pairs separated by commas. The <em>key</em>s are:
+</p>
+<dl><dt>
+<code>version</code>
+</dt>
+<dd>
+The PPK format version: either <code>3</code> or <code>2</code>.
+</dd>
+<dt>
+<code>kdf</code>
+</dt>
+<dd>
+The variant of Argon2 to use: <code>argon2id</code>, <code>argon2i</code>, and <code>argon2d</code>.
+</dd>
+<dt>
+<code>memory</code>
+</dt>
+<dd>
+The amount of memory needed to decrypt the key, in Kbyte.
+</dd>
+<dt>
+<code>time</code>
+</dt>
+<dd>
+Specifies how much time is required to attempt decrypting the key, in milliseconds.
+</dd>
+<dt>
+<code>passes</code>
+</dt>
+<dd>
+Alternative to <code>time</code>: specifies the number of hash passes required to attempt decrypting the key.
+</dd>
+<dt>
+<code>parallelism</code>
+</dt>
+<dd>
+Number of parallelisable threads that can be used to decrypt the key.
+</dd>
+</dl>
+
+</dd>
+<dt>
+<code>-E</code> <em>fptype</em>
+</dt>
+<dd>
+Algorithm to use when displaying key fingerprints. You can select <code>sha256</code> or <code>md5</code>. See <a href="puttygen-fingerprint.html#S8.2.6">section 8.2.6</a>.
+</dd>
+</dl>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

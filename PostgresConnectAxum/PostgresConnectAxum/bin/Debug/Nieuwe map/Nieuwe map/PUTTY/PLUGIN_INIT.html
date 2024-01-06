@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>PLUGIN_INIT</title>
+<link rel="previous" href="authplugin-messages.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="PLUGIN_INIT_RESPONSE.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="SH.6.1"></a>H.6.1 <code>PLUGIN_INIT</code></h1>
+<p>
+<strong>Direction</strong>: client to plugin
+</p>
+<p>
+<strong>When</strong>: the first message sent at connection startup
+</p>
+<p>
+<strong>What happens next</strong>: the plugin will send <code>PLUGIN_INIT_RESPONSE</code> or <code>PLUGIN_INIT_FAILURE</code>
+</p>
+<p>
+<strong>Message contents after the type code</strong>:
+</p>
+<ul><li>
+<strong>uint32</strong>: the highest version number of this protocol that the client knows how to speak.
+</li>
+<li>
+<strong>string</strong>: the hostname of the server. This will be the <em>logical</em> hostname, in cases where it differs from the physical destination of the network connection. Whatever name would be used by the SSH client to cache the server's host key, that's the same name passed in this message.
+</li>
+<li>
+<strong>uint32</strong>: the port number on the server. (Together with the host name, this forms a primary key identifying a particular server. Port numbers may be vital because a single host can run two unrelated SSH servers with completely different authentication requirements, e.g. system sshd on port 22 and Gerrit on port 29418.)
+</li>
+<li>
+<strong>string</strong>: the username that the client will use to log in, if the plugin chooses not to override it. An empty string means that the client has no opinion about this (and might, for example, prompt the user).
+</li>
+</ul>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Sending terminal modes</title>
+<link rel="previous" href="config-ssh-pty.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="config-ssh-x11.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S4.24.2"></a>4.24.2 Sending <a name="i0"></a>terminal modes</h1>
+<p>
+The SSH protocol allows the client to send &#8216;terminal modes&#8217; for the remote pseudo-terminal. These usually control the server's expectation of the local terminal's behaviour.
+</p>
+<p>
+If your server does not have sensible defaults for these modes, you may find that changing them here helps, although the server is at liberty to ignore your changes. If you don't understand any of this, it's safe to leave these settings alone.
+</p>
+<p>
+(None of these settings will have any effect if no pseudo-terminal is requested or allocated.)
+</p>
+<p>
+You can change what happens for a particular mode by selecting it in the list, choosing one of the options and specifying the exact value if necessary, and hitting &#8216;Set&#8217;. The effect of the options is as follows:
+</p>
+<ul><li>
+If the &#8216;Auto&#8217; option is selected, the PuTTY tools will decide whether to specify that mode to the server, and if so, will send a sensible value.
+<p>
+PuTTY proper will send modes that it has an opinion on (currently only the code for the Backspace key, <code>ERASE</code>, and whether the character set is UTF-8, <code>IUTF8</code>). Plink on Unix will propagate appropriate modes from the local terminal, if any.
+</p>
+
+</li>
+<li>
+If &#8216;Nothing&#8217; is selected, no value for the mode will be specified to the server under any circumstances.
+</li>
+<li>
+If a value is specified, it will be sent to the server under all circumstances. The precise syntax of the value box depends on the mode.
+</li>
+</ul>
+<p>
+By default, all of the available modes are listed as &#8216;Auto&#8217;, which should do the right thing in most circumstances.
+</p>
+<p>
+The precise effect of each setting, if any, is up to the server. Their names come from <a name="i1"></a>POSIX and other Unix systems, and they are most likely to have a useful effect on such systems. (These are the same settings that can usually be changed using the <a name="i2"></a><code>stty</code> command once logged in to such servers.)
+</p>
+<p>
+Some notable modes are described below; for fuller explanations, see your server documentation.
+</p>
+<ul><li>
+<a name="i3"></a><code>ERASE</code> is the character that when typed by the user will delete one space to the left. When set to &#8216;Auto&#8217; (the default setting), this follows the setting of the local Backspace key in PuTTY (see <a href="config-backspace.html#S4.4.1">section 4.4.1</a>).
+<p>
+This and other <a name="i4"></a>special characters are specified using <code>^C</code> notation for Ctrl-C, and so on. Use <code>^&lt;27&gt;</code> or <code>^&lt;0x1B&gt;</code> to specify a character numerically, and <code>^~</code> to get a literal <code>^</code>. Other non-control characters are denoted by themselves. Leaving the box entirely blank indicates that <em>no</em> character should be assigned to the specified function, although this may not be supported by all servers. 
+</p>
+
+</li>
+<li>
+<a name="i5"></a><code>QUIT</code> is a special character that usually forcefully ends the current process on the server (<code>SIGQUIT</code>). On many servers its default setting is Ctrl-backslash (<code>^\</code>), which is easy to accidentally invoke on many keyboards. If this is getting in your way, you may want to change it to another character or turn it off entirely.
+</li>
+<li>
+Boolean modes such as <code>ECHO</code> and <code>ICANON</code> can be specified in PuTTY in a variety of ways, such as <code>true</code>/<code>false</code>, <code>yes</code>/<code>no</code>, and <code>0</code>/<code>1</code>. (Explicitly specifying a value of <code>no</code> is different from not sending the mode at all.)
+</li>
+<li>
+The boolean mode <a name="i6"></a><code>IUTF8</code> signals to the server whether the terminal character set is <a name="i7"></a>UTF-8 or not, for purposes such as basic line editing; if this is set incorrectly, the backspace key may erase the wrong amount of text, for instance. However, simply setting this is not usually sufficient for the server to use UTF-8; POSIX servers will generally also require the locale to be set (by some server-dependent means), although many newer installations default to UTF-8. Also, since this mode was added to the SSH protocol much later than the others, many servers (particularly older servers) do not honour this mode sent over SSH; indeed, a few poorly-written servers object to its mere presence, so you may find you need to set it to not be sent at all. When set to &#8216;Auto&#8217;, this follows the local configured character set (see <a href="config-charset.html#S4.10.1">section 4.10.1</a>).
+</li>
+<li>
+Terminal speeds are configured elsewhere; see <a href="config-termspeed.html#S4.15.4">section 4.15.4</a>.
+</li>
+</ul>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

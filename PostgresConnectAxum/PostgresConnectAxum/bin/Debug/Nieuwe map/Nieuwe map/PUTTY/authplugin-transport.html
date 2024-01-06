@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Transport and configuration</title>
+<link rel="previous" href="authplugin-req.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="authplugin-formats.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="SH.2"></a>H.2 Transport and configuration</h1>
+<p>
+Plugins are executable programs on the client platform.
+</p>
+<p>
+The SSH client must be manually configured to use a plugin for a particular connection. The configuration takes the form of a command line, including the location of the plugin executable, and optionally command-line arguments that are meaningful to the particular plugin.
+</p>
+<p>
+The client invokes the plugin as a subprocess, passing it a pair of 8-bit-clean pipes as its standard input and output. On those pipes, the client and plugin will communicate via the protocol specified below.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

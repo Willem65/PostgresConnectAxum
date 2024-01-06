@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Unix-domain sockets: integrating with WSL 1</title>
+<link rel="previous" href="pageant-cmdline-openssh.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="pageant-cmdline-keylist.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S9.3.4"></a>9.3.4 Unix-domain sockets: integrating with WSL 1</h1>
+<p>
+Pageant can listen on the WinSock implementation of &#8216;Unix-domain sockets&#8217;. These interoperate with the Unix-domain sockets found in the original Windows Subsystem for Linux (now known as WSL 1). So if you ask Pageant to listen on one of these, then your WSL 1 processes can talk directly to Pageant.
+</p>
+<p>
+To configure this, run Pageant with the option <code>--unix</code>, followed with a pathname. Then, in WSL 1, set the environment variable <code>SSH_AUTH_SOCK</code> to point at the WSL translation of that pathname.
+</p>
+<p>
+For example, you might run
+</p>
+<pre><code>pageant --unix C:\Users\Simon\.ssh\agent.sock
+</code></pre>
+<p>
+and in WSL 1, set the environment variable
+</p>
+<pre><code>SSH_AUTH_SOCK=/mnt/c/Users/Simon/.ssh/agent.sock
+</code></pre>
+<p>
+Alternatively, you can add a line to your <code>.ssh/config</code> file inside WSL that says
+</p>
+<pre><code>IdentityAgent /mnt/c/Users/Simon/.ssh/agent.sock
+</code></pre>
+<p>
+although doing it like that may mean that <code>ssh-add</code> commands won't find the agent, even though <code>ssh</code> itself will.
+</p>
+<p>
+<strong>Security note</strong>: Unix-domain sockets are protected against access by other users by the file protections on their containing directory. So if your Windows machine is multiuser, make sure you create the socket inside a directory that other users can't access at all. (In fact, that's a good idea on general principles.)
+</p>
+<p>
+<strong>Compatibility note</strong>: WSL 2 processes cannot talk to Pageant by this mechanism, because WSL 2's Unix-domain sockets are managed by a separate Linux kernel, and not by the same kernel that WinSock talks to.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

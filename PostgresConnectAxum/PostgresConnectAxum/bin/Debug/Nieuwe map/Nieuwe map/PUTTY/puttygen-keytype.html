@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Selecting the type of key</title>
+<link rel="previous" href="puttygen-generating.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="puttygen-strength.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S8.2.2"></a>8.2.2 Selecting the type of key</h1>
+<p>
+Before generating a key pair using PuTTYgen, you need to select which type of key you need.
+</p>
+<p>
+The current version of the SSH protocol, SSH-2, supports several different key types, although specific servers may not support all of them. PuTTYgen can generate:
+</p>
+<ul><li>
+An <a name="i0"></a>RSA key for use with the SSH-2 protocol.
+</li>
+<li>
+A <a name="i1"></a>DSA key for use with the SSH-2 protocol.
+</li>
+<li>
+An <a name="i2"></a>ECDSA (<a name="i3"></a>elliptic curve DSA) key for use with the SSH-2 protocol.
+</li>
+<li>
+An <a name="i4"></a>EdDSA key (Edwards-curve DSA, another elliptic curve algorithm) for use with the SSH-2 protocol.
+</li>
+</ul>
+<p>
+PuTTYgen can also generate an RSA key suitable for use with the old SSH-1 protocol (which only supports RSA); for this, you need to select the &#8216;SSH-1 (RSA)&#8217; option. Since the SSH-1 protocol is no longer considered secure, it's rare to need this option.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

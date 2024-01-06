@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SDebugProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ProductVersionNumber>1.0</ProductVersionNumber>
+  <Name>test</Name>
+  <ProjectOptions>
+    <EnableCommandExtensions>true</EnableCommandExtensions>
+    <EnableDelayedExpansion>false</EnableDelayedExpansion>
+    <OutputMode>Ansi</OutputMode>
+    <Echo>true</Echo>
+    <AutoRun>false</AutoRun>
+  </ProjectOptions>
+  <Files>
+    <ProjectFile>
+      <Name>NewFile01.bat</Name>
+      <RelativeFileName>NewFile01.bat</RelativeFileName>
+      <FileAction>Analyze</FileAction>
+      <IsStartup>true</IsStartup>
+      <StreamType>PlainText</StreamType>
+    </ProjectFile>
+  </Files>
+</SDebugProject>

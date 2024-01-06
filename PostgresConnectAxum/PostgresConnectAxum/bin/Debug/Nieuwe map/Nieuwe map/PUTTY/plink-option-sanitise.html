@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>-sanitise-stream: control output sanitisation</title>
+<link rel="previous" href="plink-option-shareexists.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="plink-option-antispoof.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S7.2.3.5"></a>7.2.3.5 <a name="i0"></a><a name="i1"></a><a name="i2"></a><a name="i3"></a><code>-sanitise-</code><em>stream</em>: control output sanitisation</h1>
+<p>
+In some situations, Plink applies a sanitisation pass to the output received from the server, to strip out control characters such as backspace and the escape character.
+</p>
+<p>
+The idea of this is to prevent remote processes from sending confusing escape sequences through the standard error channel when Plink is being used as a transport for something like <code>git</code> or CVS. If the server actually wants to send an error message, it will probably be plain text; if the server abuses that channel to try to write over unexpected parts of your terminal display, Plink will try to stop it.
+</p>
+<p>
+By default, this only happens for output channels which are sent to a Windows console device, or a Unix terminal device. (Any output stream going somewhere else is likely to be needed by an 8-bit protocol and must not be tampered with at all.) It also stops happening if you tell Plink to allocate a remote pseudo-terminal (see <a href="using-cmdline-pty.html#S3.11.3.12">section 3.11.3.12</a> and <a href="config-ssh-pty.html#S4.24.1">section 4.24.1</a>), on the basis that in that situation you often <em>want</em> escape sequences from the server to go to your terminal.
+</p>
+<p>
+But in case Plink guesses wrong about whether you want this sanitisation, you can override it in either direction, using one of these options:
+</p>
+<dl><dt>
+<code>-sanitise-stderr</code>
+</dt>
+<dd>
+Sanitise server data written to Plink's standard error channel, regardless of terminals and consoles and remote ptys.
+</dd>
+<dt>
+<code>-no-sanitise-stderr</code>
+</dt>
+<dd>
+Do not sanitise server data written to Plink's standard error channel.
+</dd>
+<dt>
+<code>-sanitise-stdout</code>
+</dt>
+<dd>
+Sanitise server data written to Plink's standard output channel.
+</dd>
+<dt>
+<code>-no-sanitise-stdout</code>
+</dt>
+<dd>
+Do not sanitise server data written to Plink's standard output channel.
+</dd>
+</dl>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

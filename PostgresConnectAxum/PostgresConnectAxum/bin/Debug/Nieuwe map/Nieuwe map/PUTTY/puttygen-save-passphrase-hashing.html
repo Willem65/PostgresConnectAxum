@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Options affecting passphrase hashing</title>
+<link rel="previous" href="puttygen-save-ppk-version.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="puttygen-load.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S8.2.13.2"></a>8.2.13.2 Options affecting <a name="i0"></a>passphrase hashing</h1>
+<p>
+All of the following options only affect keys saved with passphrases. They control how much work is required to decrypt the key (which happens every time you type its passphrase). This allows you to trade off the cost of legitimate use of the key against the resistance of the encrypted key to password-guessing attacks.
+</p>
+<p>
+These options only affect PPK version 3.
+</p>
+<dl><dt>
+Key derivation function
+</dt>
+<dd>
+The variant of the <a name="i1"></a>Argon2 key derivation function to use. You might change this if you consider your exposure to <a name="i2"></a>side-channel attacks to be different to the norm.
+</dd>
+<dt>
+Memory to use for passphrase hash
+</dt>
+<dd>
+The amount of memory needed to decrypt the key, in Kbyte.
+</dd>
+<dt>
+Time to use for passphrase hash
+</dt>
+<dd>
+Controls how much time is required to attempt decrypting the key. You can either specify an approximate time in milliseconds (on this machine), or explicitly specify a number of hash passes (which is what the time is turned into during encryption).
+</dd>
+<dt>
+Parallelism for passphrase hash
+</dt>
+<dd>
+Number of parallelisable threads that can be used to decrypt the key. The default, 1, forces the process to run single-threaded, even on machines with multiple cores.
+</dd>
+</dl>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

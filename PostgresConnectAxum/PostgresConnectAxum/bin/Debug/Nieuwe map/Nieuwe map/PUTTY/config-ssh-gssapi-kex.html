@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>GSSAPI-based key exchange</title>
+<link rel="previous" href="config-ssh-kex-order.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="config-ssh-kex-rekey.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S4.18.1.1"></a>4.18.1.1 GSSAPI-based key exchange</h1>
+<p>
+PuTTY supports a set of key exchange methods that also incorporates GSSAPI-based authentication. They are enabled with the &#8216;Attempt GSSAPI key exchange&#8217; checkbox (which also appears on the &#8216;GSSAPI&#8217; panel).
+</p>
+<p>
+PuTTY can only perform the GSSAPI-authenticated key exchange methods when using Kerberos V5, and not other GSSAPI mechanisms. If the user running PuTTY has current Kerberos V5 credentials, then PuTTY will select the GSSAPI key exchange methods in preference to any of the ordinary SSH key exchange methods configured in the preference list. There's a GSSAPI-based equivalent to most of the ordinary methods listed in <a href="config-ssh-kex-order.html#S4.18.1">section 4.18.1</a>; server support determines which one will be used. (PuTTY's preference order for GSSAPI-authenticated key exchange methods is fixed, not controlled by the preference list.)
+</p>
+<p>
+The advantage of doing GSSAPI authentication as part of the SSH key exchange is apparent when you are using credential delegation (see <a href="config-ssh-auth-gssapi-delegation.html#S4.23.1">section 4.23.1</a>). The SSH key exchange can be repeated later in the session, and this allows your Kerberos V5 credentials (which are typically short-lived) to be automatically re-delegated to the server when they are refreshed on the client. (This feature is commonly referred to as &#8216;<a name="i0"></a>cascading credentials&#8217;.)
+</p>
+<p>
+If your server doesn't support GSSAPI key exchange, it may still support GSSAPI in the SSH user authentication phase. This will still let you log in using your Kerberos credentials, but will only allow you to delegate the credentials that are active at the beginning of the session; they can't be refreshed automatically later, in a long-running session. See <a href="config-ssh-auth-gssapi.html#S4.23">section 4.23</a> for how to control GSSAPI user authentication in PuTTY.
+</p>
+<p>
+Another effect of GSSAPI key exchange is that it replaces the usual SSH mechanism of permanent host keys described in <a href="gs-hostkey.html#S2.2">section 2.2</a>. So if you use this method, then you won't be asked any interactive questions about whether to accept the server's host key. Instead, the Kerberos exchange will verify the identity of the host you connect to, at the same time as verifying your identity to it.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

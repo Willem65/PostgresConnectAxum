@@ -1,0 +1,21 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>RSA signature types in certificates</title>
+<link rel="previous" href="config-ssh-cert-valid-expr.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="config-ssh-encryption.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S4.19.4.2"></a>4.19.4.2 RSA signature types in certificates</h1>
+<p>
+RSA keys can be used to generate signatures with a choice of secure hash function. Typically, any version of OpenSSH new enough to support certificates at all will also be new enough to avoid using SHA-1, so the default settings of accepting the more modern SHA-256 and SHA-512 should be suitable for nearly all cases. For completeness, however, you can configure which types of RSA signature PuTTY will accept in a certificate from a CA using an RSA key.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

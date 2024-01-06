@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>NIST elliptic-curve keys</title>
+<link rel="previous" href="ppk-privkey-dsa.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="ppk-privkey-eddsa.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="SC.3.3"></a>C.3.3 NIST elliptic-curve keys</h1>
+<p>
+<a name="i0"></a>NIST elliptic-curve keys are stored using one of the following <strong>algorithm-name</strong> values, each corresponding to a different elliptic curve and key size:
+</p>
+<ul><li>
+&#8216;<code>ecdsa-sha2-nistp256</code>&#8217;
+</li>
+<li>
+&#8216;<code>ecdsa-sha2-nistp384</code>&#8217;
+</li>
+<li>
+&#8216;<code>ecdsa-sha2-nistp521</code>&#8217;
+</li>
+</ul>
+<p>
+The public key data has already provided the public elliptic curve point. The private key stores:
+</p>
+<ul><li>
+<code>mpint</code>: the private exponent, which is the discrete log of the public point.
+</li>
+</ul>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

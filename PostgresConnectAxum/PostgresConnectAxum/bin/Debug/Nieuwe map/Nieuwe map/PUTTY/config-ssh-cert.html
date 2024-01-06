@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>&#8216;Certificate to use with the private key&#8217;</title>
+<link rel="previous" href="config-ssh-privkey.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="config-ssh-authplugin.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S4.22.2"></a>4.22.2 &#8216;<a name="i0"></a>Certificate to use with the private key&#8217;</h1>
+<p>
+In some environments, user authentication keys can be signed in turn by a &#8216;certifying authority&#8217; (&#8216;CA&#8217; for short), and user accounts on an SSH server can be configured to automatically trust any key that's certified by the right signature.
+</p>
+<p>
+This can be a convenient setup if you have a very large number of servers. When you change your key pair, you might otherwise have to edit the <code>authorized_keys</code> file on every server individually, to make them all accept the new key. But if instead you configure all those servers <em>once</em> to accept keys signed as yours by a CA, then when you change your public key, all you have to do is to get the new key certified by the same CA as before, and then all your servers will automatically accept it without needing individual reconfiguration.
+</p>
+<p>
+One way to use a certificate is to incorporate it into your private key file. <a href="puttygen-cert.html#S8.2.9">Section 8.2.9</a> explains how to do that using PuTTYgen. But another approach is to tell PuTTY itself where to find the public certificate file, and then it will automatically present that certificate when authenticating with the corresponding private key.
+</p>
+<p>
+To do this, enter the pathname of the certificate file into the &#8216;Certificate to use with the private key&#8217; file selector.
+</p>
+<p>
+When this setting is configured, PuTTY will honour it no matter whether the private key is found in a file, or loaded into Pageant.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Expressions you can enter in &#8216;Valid hosts&#8217;</title>
+<link rel="previous" href="config-ssh-kex-cert.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="config-ssh-cert-rsa-hash.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S4.19.4.1"></a>4.19.4.1 Expressions you can enter in &#8216;Valid hosts&#8217;</h1>
+<p>
+The simplest thing you can enter in the &#8216;Valid hosts this key is trusted to certify&#8217; edit box is just a hostname wildcard such as &#8216;<code>*.example.com</code>&#8217;. This matches any host in any subdomain, so both &#8216;<code>ssh.example.com</code>&#8217; and &#8216;<code>login.dept.example.com</code>&#8217; would match, but &#8216;<code>prod.example.net</code>&#8217; would not.
+</p>
+<p>
+But you can also enter multiple host name wildcards, and port number ranges, and make complicated Boolean expressions out of them using the operators &#8216;<code>&amp;&amp;</code>&#8217; for &#8216;and&#8217;, &#8216;<code>||</code>&#8217; for &#8216;or&#8217;, &#8216;<code>!</code>&#8217; for &#8216;not&#8217;, and parentheses.
+</p>
+<p>
+For example, here are some other things you could enter.
+</p>
+<ul><li>
+&#8216;<code>*.foo.example.com || *.bar.example.com</code>&#8217;. This means the CA is trusted to sign the host key for a connection if the host name matches &#8216;*.foo.example.com&#8217; <em>or</em> it matches &#8216;*.bar.example.com&#8217;. In other words, the CA has authority over those two particular subdomains of <code>example.com</code>, but not for anything else, like <code>www.example.com</code>.
+</li>
+<li>
+&#8216;<code>*.example.com &amp;&amp; ! *.extrasecure.example.com</code>&#8217;. This means the CA is trusted to sign the host key for a connection if the host name matches &#8216;*.example.com&#8217; <em>but does not</em> match &#8216;*.extrasecure.example.com&#8217;. (Imagine if there was one top-secret set of servers in your company that the main IT department didn't have security clearance to administer.)
+</li>
+<li>
+&#8216;<code>*.example.com &amp;&amp; port:22</code>&#8217;. This means the CA is trusted to sign the host key for a connection if the host name matches &#8216;*.example.com&#8217; <em>and</em> the port number is 22. SSH servers running on other ports would not be covered.
+</li>
+<li>
+&#8216;<code>(*.foo.example.com || *.bar.example.com) &amp;&amp; port:0-1023</code>&#8217;. This matches two subdomains of <code>example.com</code>, as before, but <em>also</em> restricts the port number to the range 0-1023.
+</li>
+</ul>
+<p>
+A certificate configuration expression consists of one or more individual requirements which can each be a hostname wildcard, a single port number, or a port number range, combined together with these Boolean operators.
+</p>
+<p>
+Unlike other languages such as C, there is no implied priority between &#8216;<code>&amp;&amp;</code>&#8217; and &#8216;<code>||</code>&#8217;. If you write &#8216;<code>A &amp;&amp; B || C</code>&#8217; (where <code>A</code>, <code>B</code> and <code>C</code> are some particular requirements), then PuTTY will report a syntax error, because you haven't said which of the &#8216;<code>&amp;&amp;</code>&#8217; and &#8216;<code>||</code>&#8217; takes priority tightly. You will have to write either &#8216;<code>(A &amp;&amp; B) || C</code>&#8217;, meaning &#8216;both of <code>A</code> and <code>B</code>, or alternatively just <code>C</code>&#8217;, or &#8216;<code>A &amp;&amp; (B || C)</code>&#8217; (&#8216;<code>A</code>, and also at least one of <code>B</code> and <code>C</code>&#8217;), to make it clear.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

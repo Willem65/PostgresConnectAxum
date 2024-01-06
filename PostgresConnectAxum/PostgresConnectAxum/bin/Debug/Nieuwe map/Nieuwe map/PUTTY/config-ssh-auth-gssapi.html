@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>The GSSAPI panel</title>
+<link rel="previous" href="config-ssh-authplugin.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="config-ssh-auth-gssapi-delegation.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S4.23"></a>4.23 The <a name="i0"></a>GSSAPI panel</h1>
+<p>
+The &#8216;GSSAPI&#8217; subpanel of the &#8216;Auth&#8217; panel controls the use of GSSAPI authentication. This is a mechanism which delegates the authentication exchange to a library elsewhere on the client machine, which in principle can authenticate in many different ways but in practice is usually used with the <a name="i1"></a>Kerberos <a name="i2"></a>single sign-on protocol to implement <a name="i3"></a>passwordless login.
+</p>
+<p>
+GSSAPI authentication is only available in the SSH-2 protocol.
+</p>
+<p>
+PuTTY supports two forms of GSSAPI-based authentication. In one of them, the SSH key exchange happens in the normal way, and GSSAPI is only involved in authenticating the user. The checkbox labelled &#8216;Attempt GSSAPI authentication&#8217; controls this form.
+</p>
+<p>
+In the other method, GSSAPI-based authentication is combined with the SSH key exchange phase. If this succeeds, then the SSH authentication step has nothing left to do. See <a href="config-ssh-gssapi-kex.html#S4.18.1.1">section 4.18.1.1</a> for more information about this method. The checkbox labelled &#8216;Attempt GSSAPI key exchange&#8217; controls this form. (The same checkbox appears on the &#8216;Kex&#8217; panel.)
+</p>
+<p>
+If one or both of these controls is enabled, then GSSAPI authentication will be attempted in one form or the other, and (typically) if your client machine has valid Kerberos credentials loaded, then PuTTY should be able to authenticate automatically to servers that support Kerberos logins.
+</p>
+<p>
+If both of those checkboxes are disabled, PuTTY will not try any form of GSSAPI at all, and the rest of this panel will be unused.
+</p>
+
+<ul>
+<li><a href="config-ssh-auth-gssapi-delegation.html#S4.23.1">4.23.1 &#8216;Allow GSSAPI credential delegation&#8217;</a></li>
+<li><a href="config-ssh-auth-gssapi-libraries.html#S4.23.2">4.23.2 Preference order for GSSAPI libraries</a></li>
+</ul>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

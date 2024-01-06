@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>PLUGIN_KI_SERVER_RESPONSE</title>
+<link rel="previous" href="PLUGIN_KI_SERVER_REQUEST.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="PLUGIN_KI_USER_REQUEST.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="SH.6.8"></a>H.6.8 <code>PLUGIN_KI_SERVER_RESPONSE</code></h1>
+<p>
+<strong>Direction</strong>: plugin to client
+</p>
+<p>
+<strong>When</strong>: response to <code>PLUGIN_KI_SERVER_REQUEST</code>, perhaps after one or more intervening pairs of <code>PLUGIN_KI_USER_REQUEST</code> and <code>PLUGIN_KI_USER_RESPONSE</code>
+</p>
+<p>
+<strong>What happens next</strong>: the client will send a further <code>PLUGIN_KI_SERVER_REQUEST</code>, or <code>PLUGIN_AUTH_SUCCESS</code> or <code>PLUGIN_AUTH_FAILURE</code>
+</p>
+<p>
+<strong>Message contents after the type code</strong>: the exact contents of the <code>SSH_MSG_USERAUTH_INFO_RESPONSE</code> that the client should send back to the server. See <a href="authplugin-refs.html#p1">[RFC4256]</a> section 3.4 for details. The summary:
+</p>
+<ul><li>
+<strong>uint32</strong>: number of responses (must match the &#8216;number of prompts&#8217; field from the corresponding server request)
+</li>
+<li>
+That many copies of:
+<ul><li>
+<strong>string</strong>: response to the <em>n</em>th prompt (in UTF-8)
+</li>
+</ul>
+
+</li>
+</ul>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

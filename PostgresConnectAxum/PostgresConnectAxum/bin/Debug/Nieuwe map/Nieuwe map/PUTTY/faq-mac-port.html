@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Will there be a port to the Mac?</title>
+<link rel="previous" href="faq-win31.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="faq-epoc.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="QA.3.6"></a>A.3.6 Will there be a port to the <a name="i0"></a>Mac?</h1>
+<p>
+We hope so!
+</p>
+<p>
+We attempted one around 2005, written as a native Cocoa application, but it turned out to be very slow to redraw its window for some reason we never got to the bottom of.
+</p>
+<p>
+In 2015, after porting the GTK front end to work with GTK 3, we began another attempt based on making small changes to the GTK code and building it against the OS X Quartz version of GTK 3. This doesn't seem to have the window redrawing problem any more, so it's already got further than the last effort, but it is still substantially unfinished.
+</p>
+<p>
+If any OS X and/or GTK programming experts are keen to have a finished version of this, we urge them to help out with some of the remaining problems! See the TODO list in <code>unix/main-gtk-application.c</code> in the source code.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

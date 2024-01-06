@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Overview and sequence of events</title>
+<link rel="previous" href="authplugin-version.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="authplugin-messages.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="SH.5"></a>H.5 Overview and sequence of events</h1>
+<p>
+At the very beginning of the user authentication phase of SSH, the client launches the plugin subprocess, if one is configured. It immediately sends the <code>PLUGIN_INIT</code> message, telling the plugin some initial information about where the SSH connection is to.
+</p>
+<p>
+The plugin responds with <code>PLUGIN_INIT_RESPONSE</code>, which may optionally tell the SSH client what username to use.
+</p>
+<p>
+The client begins trying to authenticate with the SSH server in the usual way, using the username provided by the plugin (if any) or alternatively one obtained via its normal (non-plugin) policy.
+</p>
+<p>
+The client follows its normal policy for selecting authentication methods to attempt. If it chooses a method that this protocol does not cover, then the client will perform that method in its own way without consulting the plugin.
+</p>
+<p>
+However, if the client and server decide to attempt a method that this protocol <em>does</em> cover, then the client sends <code>PLUGIN_PROTOCOL</code> specifying the SSH protocol id for the authentication method being used. The plugin responds with <code>PLUGIN_PROTOCOL_ACCEPT</code> if it's willing to assist with this auth method, or <code>PLUGIN_PROTOCOL_REJECT</code> if it isn't.
+</p>
+<p>
+If the plugin sends <code>PLUGIN_PROTOCOL_REJECT</code>, then the client will proceed as if the plugin were not present. Later, if another auth method is negotiated (either because this one failed, or because it succeeded but the server wants multiple auth methods), the client may send a further <code>PLUGIN_PROTOCOL</code> and try again.
+</p>
+<p>
+If the plugin sends <code>PLUGIN_PROTOCOL_ACCEPT</code>, then a protocol segment begins that is specific to that auth method, terminating in either <code>PLUGIN_AUTH_SUCCESS</code> or <code>PLUGIN_AUTH_FAILURE</code>. After that, again, the client may send a further <code>PLUGIN_PROTOCOL</code>.
+</p>
+<p>
+Currently the only supported method is &#8216;<code>keyboard-interactive</code>&#8217;, defined in <a href="authplugin-refs.html#p1">[RFC4256]</a>. Once the client has announced this to the server, the followup protocol is as follows:
+</p>
+<p>
+Each time the server sends an <code>SSH_MSG_USERAUTH_INFO_REQUEST</code> message requesting authentication responses from the user, the SSH client translates the message into <code>PLUGIN_KI_SERVER_REQUEST</code> and passes it on to the plugin.
+</p>
+<p>
+At this point, the plugin may optionally send back <code>PLUGIN_KI_USER_REQUEST</code> containing prompts to be presented to the actual user. The client will reply with a matching <code>PLUGIN_KI_USER_RESPONSE</code> after asking the user to reply to the question(s) in the request message. The plugin can repeat this cycle multiple times.
+</p>
+<p>
+Once the plugin has all the information it needs to respond to the server's authentication prompts, it sends <code>PLUGIN_KI_SERVER_RESPONSE</code> back to the client, which translates it into <code>SSH_MSG_USERAUTH_INFO_RESPONSE</code> to send on to the server.
+</p>
+<p>
+After that, as described in <a href="authplugin-refs.html#p1">[RFC4256]</a>, the server is free to accept authentication, reject it, or send another <code>SSH_MSG_USERAUTH_INFO_REQUEST</code>. Each <code>SSH_MSG_USERAUTH_INFO_REQUEST</code> is dealt with in the same way as above.
+</p>
+<p>
+If the server terminates keyboard-interactive authentication with <code>SSH_MSG_USERAUTH_SUCCESS</code> or <code>SSH_MSG_USERAUTH_FAILURE</code>, the client informs the plugin by sending either <code>PLUGIN_AUTH_SUCCESS</code> or <code>PLUGIN_AUTH_FAILURE</code>. <code>PLUGIN_AUTH_SUCCESS</code> is sent when <em>that particular authentication method</em> was successful, regardless of whether the SSH server chooses to request further authentication afterwards: in particular, <code>SSH_MSG_USERAUTH_FAILURE</code> with the &#8216;partial success&#8217; flag (see <a href="authplugin-refs.html#p2">[RFC4252]</a> section 5.1) translates into <code>PLUGIN_AUTH_SUCCESS</code>.
+</p>
+<p>
+The plugin's standard input will close when the client no longer requires the plugin's services, for any reason. This could be because authentication is complete (with overall success or overall failure), or because the user has manually aborted the session in mid-authentication, or because the client crashed.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>-restrict-acl: restrict the Windows process ACL</title>
+<link rel="previous" href="using-cmdline-proxycmd.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="using-cmdline-host-ca.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S3.11.3.28"></a>3.11.3.28 <a name="i0"></a><code>-restrict-acl</code>: restrict the <a name="i1"></a>Windows process ACL</h1>
+<p>
+This option (on Windows only) causes PuTTY (or another PuTTY tool) to try to lock down the operating system's access control on its own process. If this succeeds, it should present an extra obstacle to malware that has managed to run under the same user id as the PuTTY process, by preventing it from attaching to PuTTY using the same interfaces debuggers use and either reading sensitive information out of its memory or hijacking its network session.
+</p>
+<p>
+This option is not enabled by default, because this form of interaction between Windows programs has many legitimate uses, including accessibility software such as screen readers. Also, it cannot provide full security against this class of attack in any case, because PuTTY can only lock down its own ACL <em>after</em> it has started up, and malware could still get in if it attacks the process between startup and lockdown. So it trades away noticeable convenience, and delivers less real security than you might want. However, if you do want to make that tradeoff anyway, the option is available.
+</p>
+<p>
+A PuTTY process started with <code>-restrict-acl</code> will pass that on to any processes started with Duplicate Session, New Session etc. (However, if you're invoking PuTTY tools explicitly, for instance as a proxy command, you'll need to arrange to pass them the <code>-restrict-acl</code> option yourself, if that's what you want.)
+</p>
+<p>
+If Pageant is started with the <code>-restrict-acl</code> option, and you use it to launch a PuTTY session from its <a name="i2"></a>System Tray submenu, then Pageant will <em>not</em> default to starting the PuTTY subprocess with a restricted ACL. This is because PuTTY is more likely to suffer reduced functionality as a result of restricted ACLs (e.g. screen reader software will have a greater need to interact with it), whereas Pageant stores the more critical information (hence benefits more from the extra protection), so it's reasonable to want to run Pageant but not PuTTY with the ACL restrictions. You can force Pageant to start subsidiary PuTTY processes with a restricted ACL if you also pass the <a name="i3"></a><code>-restrict-putty-acl</code> option.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

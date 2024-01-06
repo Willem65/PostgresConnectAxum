@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Protocol versioning</title>
+<link rel="previous" href="authplugin-formats.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="authplugin-overview.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="SH.4"></a>H.4 Protocol versioning</h1>
+<p>
+This protocol itself is versioned. At connection setup, the client states the highest version number it knows how to speak, and then the plugin responds by choosing the version number that will actually be spoken (which may not be higher than the client's value).
+</p>
+<p>
+Including a version number makes it possible to make breaking changes to the protocol later.
+</p>
+<p>
+Even version numbers represent released versions of this spec. Odd numbers represent drafts or development versions in between releases. A client and plugin negotiating an odd version number are not guaranteed to interoperate; the developer testing the combination is responsible for ensuring the two are compatible.
+</p>
+<p>
+This document describes version 2 of the protocol, the first released version. (The initial drafts had version 1.)
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

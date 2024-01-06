@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Specifying the Telnet, SSH, or Local proxy command</title>
+<link rel="previous" href="config-proxy-auth.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="config-proxy-logging.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S4.16.5"></a>4.16.5 Specifying the Telnet, SSH, or Local proxy command</h1>
+<p>
+If you are using the <a name="i0"></a>Telnet proxy type, the usual command required by the firewall's Telnet server is <code>connect</code>, followed by a host name and a port number. If your proxy needs a different command, you can enter an alternative in the &#8216;Command to send to proxy&#8217; box.
+</p>
+<p>
+If you are using the <a name="i1"></a>Local proxy type, the local command to run is specified here.
+</p>
+<p>
+If you are using the &#8216;SSH to proxy and execute a command&#8217; type, the command to run on the SSH proxy server is specified here. Similarly, if you are using &#8216;SSH to proxy and invoke a subsystem&#8217;, the subsystem name is constructed as specified here.
+</p>
+<p>
+In this string, you can use <code>\n</code> to represent a new-line, <code>\r</code> to represent a carriage return, <code>\t</code> to represent a tab character, and <code>\x</code> followed by two hex digits to represent any other character. <code>\\</code> is used to encode the <code>\</code> character itself.
+</p>
+<p>
+Also, the special strings <code>%host</code> and <code>%port</code> will be replaced by the host name and port number you want to connect to. For Telnet and Local proxy types, the strings <code>%user</code> and <code>%pass</code> will be replaced by the proxy username and password (which, if not specified in the configuration, will be prompted for) &#8211; this does not happen with SSH proxy types (because the proxy username/password are used for SSH authentication). The strings <code>%proxyhost</code> and <code>%proxyport</code> will be replaced by the host details specified on the <em>Proxy</em> panel, if any (this is most likely to be useful for proxy types using a local or remote command). To get a literal <code>%</code> sign, enter <code>%%</code>.
+</p>
+<p>
+If a Telnet proxy server prompts for a username and password before commands can be sent, you can use a command such as:
+</p>
+<pre><code>%user\n%pass\nconnect %host %port\n
+</code></pre>
+<p>
+This will send your username and password as the first two lines to the proxy, followed by a command to connect to the desired host and port. Note that if you do not include the <code>%user</code> or <code>%pass</code> tokens in the Telnet command, then anything specified in &#8216;Username&#8217; and &#8216;Password&#8217; configuration fields will be ignored.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

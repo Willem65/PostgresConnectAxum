@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>PLUGIN_PROTOCOL_ACCEPT</title>
+<link rel="previous" href="PLUGIN_PROTOCOL_REJECT.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="PLUGIN_KI_SERVER_REQUEST.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="SH.6.6"></a>H.6.6 <code>PLUGIN_PROTOCOL_ACCEPT</code></h1>
+<p>
+<strong>Direction</strong>: plugin to client
+</p>
+<p>
+<strong>When</strong>: sent after <code>PLUGIN_PROTOCOL</code>
+</p>
+<p>
+<strong>What happens next</strong>: depends on the auth protocol agreed on. For keyboard-interactive, the client will send <code>PLUGIN_KI_SERVER_REQUEST</code> or <code>PLUGIN_AUTH_SUCCESS</code> or <code>PLUGIN_AUTH_FAILURE</code>. No other method is specified.
+</p>
+<p>
+<strong>Message contents after the type code</strong>: none.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Selecting a protocol: -ssh, -ssh-connection, -telnet, -rlogin, -supdup, -raw, -serial</title>
+<link rel="previous" href="using-cmdline-load.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="using-cmdline-v.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S3.11.3.2"></a>3.11.3.2 Selecting a protocol: <code>-ssh</code>, <code>-ssh-connection</code>, <code>-telnet</code>, <code>-rlogin</code>, <code>-supdup</code>, <code>-raw</code>, <code>-serial</code></h1>
+<p>
+To choose which protocol you want to connect with, you can use one of these options:
+</p>
+<ul><li>
+<a name="i0"></a><code>-ssh</code> selects the SSH protocol.
+</li>
+<li>
+<a name="i1"></a><code>-ssh-connection</code> selects the bare ssh-connection protocol. (This is only useful in specialised circumstances; see <a href="config-psusan.html#S4.28">section 4.28</a> for more information.)
+</li>
+<li>
+<a name="i2"></a><code>-telnet</code> selects the Telnet protocol.
+</li>
+<li>
+<a name="i3"></a><code>-rlogin</code> selects the Rlogin protocol.
+</li>
+<li>
+<a name="i4"></a><code>-supdup</code> selects the SUPDUP protocol.
+</li>
+<li>
+<a name="i5"></a><code>-raw</code> selects the raw protocol.
+</li>
+<li>
+<a name="i6"></a><code>-serial</code> selects a serial connection.
+</li>
+</ul>
+<p>
+Most of these options are not available in the file transfer tools PSCP and PSFTP (which only work with the SSH protocol and the bare ssh-connection protocol).
+</p>
+<p>
+These options are equivalent to the <a name="i7"></a>protocol selection buttons in the Session panel of the PuTTY configuration box (see <a href="config-hostname.html#S4.1.1">section 4.1.1</a>).
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

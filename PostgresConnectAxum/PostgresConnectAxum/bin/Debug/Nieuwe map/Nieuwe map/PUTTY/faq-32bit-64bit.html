@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Should I run the 32-bit or the 64-bit version?</title>
+<link rel="previous" href="faq-pscp-spaces.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="faq-trouble.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="QA.6.10"></a>A.6.10 Should I run the 32-bit or the 64-bit version?</h1>
+<p>
+If you're not sure, the <a name="i0"></a>32-bit version is generally the safe option. It will run perfectly well on all processors and on all versions of Windows that PuTTY supports. PuTTY doesn't require to run as a 64-bit application to work well, and having a 32-bit PuTTY on a 64-bit system isn't likely to cause you any trouble.
+</p>
+<p>
+The 64-bit version (first released in 0.68) will only run if you have a 64-bit processor <em>and</em> a <a name="i1"></a>64-bit edition of Windows (both of these things are likely to be true of any recent Windows PC). It will run somewhat faster (in particular, the cryptography will be faster, especially during link setup), but it will consume slightly more memory.
+</p>
+<p>
+If you need to use an external <a name="i2"></a>DLL for GSSAPI authentication, that DLL may only be available in a 32-bit or 64-bit form, and that will dictate the version of PuTTY you need to use. (You will probably know if you're doing this; see <a href="config-ssh-auth-gssapi-libraries.html#S4.23.2">section 4.23.2</a> in the documentation.)
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

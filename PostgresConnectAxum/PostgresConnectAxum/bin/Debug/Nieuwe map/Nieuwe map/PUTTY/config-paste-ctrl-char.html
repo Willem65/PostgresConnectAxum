@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>&#8216;Permit control characters in pasted text&#8217;</title>
+<link rel="previous" href="config-selection-clipactions.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="config-selection-copy.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S4.11.5"></a>4.11.5 &#8216;Permit control characters in pasted text&#8217;</h1>
+<p>
+It is possible for the clipboard to contain not just text (with newlines and tabs) but also control characters such as ESC which could have surprising effects if pasted into a terminal session, depending on what program is running on the server side. Copying text from a mischievous web page could put such characters onto the clipboard.
+</p>
+<p>
+By default, PuTTY filters out the more unusual control characters, only letting through the more obvious text-formatting characters (newlines, tab, backspace, and DEL).
+</p>
+<p>
+Setting this option stops this filtering; on paste, any character on the clipboard is sent to the session uncensored. This might be useful if you are deliberately using control character pasting as a simple form of scripting, for instance.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

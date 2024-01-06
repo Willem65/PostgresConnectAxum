@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Overview</title>
+<link rel="previous" href="ppk.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="ppk-outer.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="SC.1"></a>C.1 Overview</h1>
+<p>
+A PPK file stores a private key, and the corresponding public key. Both are contained in the same file.
+</p>
+<p>
+The file format can be completely unencrypted, or it can encrypt the private key. The <em>public</em> key is stored in cleartext in both cases. (This enables PuTTY to send the public key to an SSH server to see whether it will accept it, and not bother prompting for the passphrase unless the server says yes.)
+</p>
+<p>
+When the key file is encrypted, the encryption key is derived from a passphrase. An encrypted PPK file is also tamper-proofed using a MAC (authentication code), also derived from the same passphrase. The MAC protects the encrypted private key data, but it also covers the cleartext parts of the file. So you can't edit the public half of the key without invalidating the MAC and causing the key file as a whole to become useless.
+</p>
+<p>
+This MAC protects the key file against active cryptographic attacks in which the public half of a key pair is modified in a controlled way that allows an attacker to deduce information about the private half from the resulting corrupted signatures. Any attempt to do that to a PPK file should be reliably caught by the MAC failing to validate.
+</p>
+<p>
+(Such an attack would only be useful if the key file was stored in a location where the attacker could modify it without also having full access to the process that you type passphrases into. But that's not impossible; for example, if your home directory was on a network file server, then the file server's administrator could access the key file but not processes on the client machine.)
+</p>
+<p>
+The MAC also covers the <em>comment</em> on the key. This stops an attacker from swapping keys with each other and editing the comments to disguise the fact. As a consequence, PuTTYgen cannot edit the comment on a key unless you decrypt the key with your passphrase first.
+</p>
+<p>
+(The circumstances in which <em>that</em> attack would be useful are even more restricted. One example might be that the different keys trigger specific actions on the server you're connecting to and one of those actions is more useful to the attacker than the other. But once you have a MAC at all, it's no extra effort to make it cover as much as possible, and usually sensible.)
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

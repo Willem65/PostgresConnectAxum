@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Version 2</title>
+<link rel="previous" href="ppk-old.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="ppk-v1.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="SC.5.1"></a>C.5.1 Version 2</h1>
+<p>
+PPK version 2 was used by PuTTY 0.52 to 0.74 inclusive.
+</p>
+<p>
+In PPK version 2, the MAC algorithm used was HMAC-SHA-1 (so the <code>Private-MAC</code> line contained only 40 hex digits).
+</p>
+<p>
+The &#8216;<code>Key-Derivation:</code>&#8217; header and all the &#8216;<code>Argon2-</code><em>Parameter</em><code>:</code>&#8217; headers were absent. Instead of using Argon2, the key material for encrypting the private blob was derived from the passphrase in a totally different way, as follows.
+</p>
+<p>
+The cipher key for &#8216;<code>aes256-cbc</code>&#8217; was constructed by generating two SHA-1 hashes, concatenating them, and taking the first 32 bytes of the result. (So you'd get all 20 bytes of the first hash output, and the first 12 of the second). Each hash preimage was as follows:
+</p>
+<ul><li>
+<code>uint32</code>: a sequence number. This is 0 in the first hash, and 1 in the second. (The idea was to extend this mechanism to further hashes by continuing to increment the sequence number, if future changes required even longer keys.)
+</li>
+<li>
+the passphrase, without any prefix length field.
+</li>
+</ul>
+<p>
+In PPK v2, the CBC initialisation vector was all zeroes.
+</p>
+<p>
+The MAC key was 20 bytes long, and was a single SHA-1 hash of the following data:
+</p>
+<ul><li>
+the fixed string &#8216;<code>putty-private-key-file-mac-key</code>&#8217;, without any prefix length field.
+</li>
+<li>
+the passphrase, without any prefix length field. (If the key is stored unencrypted, the passphrase was taken to be the empty string for these purposes.)
+</li>
+</ul>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

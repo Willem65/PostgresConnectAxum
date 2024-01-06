@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>&#8216;Chokes on PuTTY's full KEXINIT&#8217;</title>
+<link rel="previous" href="config-ssh-bug-dropstart.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="config-ssh-bug-sig.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S4.27.7"></a>4.27.7 &#8216;Chokes on PuTTY's full <code>KEXINIT</code>&#8217;</h1>
+<p>
+At the start of an SSH connection, the client and server exchange long messages of type <code>SSH_MSG_KEXINIT</code>, containing lists of all the cryptographic algorithms they're prepared to use. This is used to negotiate a set of algorithms that both ends can speak.
+</p>
+<p>
+Occasionally, a badly written server might have a length limit on the list it's prepared to receive, and refuse to make a connection simply because PuTTY is giving it too many choices.
+</p>
+<p>
+A workaround is to enable this flag, which will make PuTTY wait to send <code>KEXINIT</code> until after it receives the one from the server, and then filter its own <code>KEXINIT</code> to leave out any algorithm the server doesn't also announce support for. This will generally make PuTTY's <code>KEXINIT</code> at most the size of the server's, and will otherwise make no difference to the algorithm negotiation.
+</p>
+<p>
+This flag is a minor violation of the SSH protocol, because both sides are supposed to send <code>KEXINIT</code> proactively. It still works provided <em>one</em> side sends its <code>KEXINIT</code> without waiting, but if both client and server waited for the other one to speak first, the connection would deadlock. We don't know of any servers that do this, but if there is one, then this flag will make PuTTY unable to speak to them at all.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

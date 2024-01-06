@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>&#8216;SSH protocol version 2 required by our configuration but remote only provides (old, insecure) SSH-1&#8217;</title>
+<link rel="previous" href="errors-cert-mismatch.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="errors-cipher-warning.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S10.4"></a>10.4 &#8216;SSH protocol version 2 required by our configuration but remote only provides (old, insecure) SSH-1&#8217;</h1>
+<p>
+By default, PuTTY only supports connecting to SSH servers that implement <a name="i0"></a>SSH protocol version 2. If you see this message, the server you're trying to connect to only supports the older SSH-1 protocol.
+</p>
+<p>
+If the server genuinely only supports SSH-1, then you need to either change the &#8216;SSH protocol version&#8217; setting (see <a href="config-ssh-prot.html#S4.17.4">section 4.17.4</a>), or use the <code>-1</code> command-line option; in any case, you should not treat the resulting connection as secure.
+</p>
+<p>
+You might start seeing this message with new versions of PuTTY (from 0.68 onwards) where you didn't before, because it used to be possible to configure PuTTY to automatically fall back from SSH-2 to SSH-1. This is no longer supported, to prevent the possibility of a downgrade attack.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>After I upgraded PuTTY to 0.68, I can no longer connect to my embedded device or appliance.</title>
+<link rel="previous" href="faq-system32.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="faq-secure.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="QA.7.23"></a>A.7.23 After I upgraded PuTTY to 0.68, I can no longer connect to my embedded device or appliance.</h1>
+<p>
+If your SSH server has started unexpectedly closing SSH connections after you enter your password, and it worked before 0.68, you may have a buggy server that objects to certain SSH protocol extensions.
+</p>
+<p>
+The SSH protocol recently gained a new &#8216;terminal mode&#8217;, <code>IUTF8</code>, which PuTTY sends by default; see <a href="config-ttymodes.html#S4.24.2">section 4.24.2</a>. This is the first new terminal mode since the SSH-2 protocol was defined. While servers are supposed to ignore modes they don't know about, some buggy servers will unceremoniously close the connection if they see anything they don't recognise. SSH servers in embedded devices, network appliances, and the like seem to disproportionately have this bug.
+</p>
+<p>
+If you think you have such a server, from 0.69 onwards you can disable sending of the <code>IUTF8</code> mode: on the SSH / TTY panel, select <code>IUTF8</code> on the list, select &#8216;Nothing&#8217;, and press &#8216;Set&#8217;. (It's not possible to disable sending this mode in 0.68.)
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

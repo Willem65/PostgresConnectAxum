@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>&#8216;Allow GSSAPI credential delegation&#8217;</title>
+<link rel="previous" href="config-ssh-auth-gssapi.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="config-ssh-auth-gssapi-libraries.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S4.23.1"></a>4.23.1 &#8216;Allow GSSAPI credential delegation&#8217;</h1>
+<p>
+<a name="i0"></a>GSSAPI credential delegation is a mechanism for passing on your Kerberos (or other) identity to the session on the SSH server. If you enable this option, then not only will PuTTY be able to log in automatically to a server that accepts your Kerberos credentials, but also you will be able to connect out from that server to other Kerberos-supporting services and use the same credentials just as automatically.
+</p>
+<p>
+(This option is the Kerberos analogue of SSH agent forwarding; see <a href="pageant-forward.html#S9.4">section 9.4</a> for some information on that.)
+</p>
+<p>
+Note that, like SSH agent forwarding, there is a security implication in the use of this option: the administrator of the server you connect to, or anyone else who has cracked the administrator account on that server, could fake your identity when connecting to further Kerberos-supporting services. However, Kerberos sites are typically run by a central authority, so the administrator of one server is likely to already have access to the other services too; so this would typically be less of a risk than SSH agent forwarding.
+</p>
+<p>
+If your connection is not using GSSAPI key exchange, it is possible for the delegation to expire during your session. See <a href="config-ssh-gssapi-kex.html#S4.18.1.1">section 4.18.1.1</a> for more information.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

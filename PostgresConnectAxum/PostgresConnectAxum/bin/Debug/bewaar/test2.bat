@@ -1,0 +1,1 @@
+for /f "delims=\" %%a in ("%cd%") do echo %%~nxa

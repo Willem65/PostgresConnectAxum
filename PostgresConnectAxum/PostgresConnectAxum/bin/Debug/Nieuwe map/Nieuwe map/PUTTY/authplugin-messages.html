@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Message formats</title>
+<link rel="previous" href="authplugin-overview.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="PLUGIN_INIT.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="SH.6"></a>H.6 Message formats</h1>
+<p>
+This section describes the format of every message in the protocol.
+</p>
+<p>
+As described in <a href="authplugin-formats.html#SH.3">section H.3</a>, every message starts with the same two fields:
+</p>
+<ul><li>
+<strong>uint32</strong>: overall length of the message
+</li>
+<li>
+<strong>byte</strong>: message type.
+</li>
+</ul>
+<p>
+The length field does not include itself, but does include the type code.
+</p>
+<p>
+The following subsections each give the format of the remainder of the message, after the type code.
+</p>
+<p>
+The type codes themselves are defined here:
+</p>
+<pre><code>#define PLUGIN_INIT                   1
+#define PLUGIN_INIT_RESPONSE          2
+#define PLUGIN_PROTOCOL               3
+#define PLUGIN_PROTOCOL_ACCEPT        4
+#define PLUGIN_PROTOCOL_REJECT        5
+#define PLUGIN_AUTH_SUCCESS           6
+#define PLUGIN_AUTH_FAILURE           7
+#define PLUGIN_INIT_FAILURE           8
+
+#define PLUGIN_KI_SERVER_REQUEST     20
+#define PLUGIN_KI_SERVER_RESPONSE    21
+#define PLUGIN_KI_USER_REQUEST       22
+#define PLUGIN_KI_USER_RESPONSE      23
+</code></pre>
+<p>
+If this protocol is extended to be able to assist with further auth methods, their message type codes will also begin from 20, overlapping the codes for keyboard-interactive.
+</p>
+
+<ul>
+<li><a href="PLUGIN_INIT.html#SH.6.1">H.6.1 <code>PLUGIN_INIT</code></a></li>
+<li><a href="PLUGIN_INIT_RESPONSE.html#SH.6.2">H.6.2 <code>PLUGIN_INIT_RESPONSE</code></a></li>
+<li><a href="PLUGIN_INIT_FAILURE.html#SH.6.3">H.6.3 <code>PLUGIN_INIT_FAILURE</code></a></li>
+<li><a href="PLUGIN_PROTOCOL.html#SH.6.4">H.6.4 <code>PLUGIN_PROTOCOL</code></a></li>
+<li><a href="PLUGIN_PROTOCOL_REJECT.html#SH.6.5">H.6.5 <code>PLUGIN_PROTOCOL_REJECT</code></a></li>
+<li><a href="PLUGIN_PROTOCOL_ACCEPT.html#SH.6.6">H.6.6 <code>PLUGIN_PROTOCOL_ACCEPT</code></a></li>
+<li><a href="PLUGIN_KI_SERVER_REQUEST.html#SH.6.7">H.6.7 <code>PLUGIN_KI_SERVER_REQUEST</code></a></li>
+<li><a href="PLUGIN_KI_SERVER_RESPONSE.html#SH.6.8">H.6.8 <code>PLUGIN_KI_SERVER_RESPONSE</code></a></li>
+<li><a href="PLUGIN_KI_USER_REQUEST.html#SH.6.9">H.6.9 <code>PLUGIN_KI_USER_REQUEST</code></a></li>
+<li><a href="PLUGIN_KI_USER_RESPONSE.html#SH.6.10">H.6.10 <code>PLUGIN_KI_USER_RESPONSE</code></a></li>
+<li><a href="PLUGIN_AUTH_SUCCESS.html#SH.6.11">H.6.11 <code>PLUGIN_AUTH_SUCCESS</code></a></li>
+<li><a href="PLUGIN_AUTH_FAILURE.html#SH.6.12">H.6.12 <code>PLUGIN_AUTH_FAILURE</code></a></li>
+</ul>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

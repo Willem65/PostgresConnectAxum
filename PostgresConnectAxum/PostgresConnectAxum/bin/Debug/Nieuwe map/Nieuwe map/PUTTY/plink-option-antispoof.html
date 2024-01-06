@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>-no-antispoof: turn off authentication spoofing protection prompt</title>
+<link rel="previous" href="plink-option-sanitise.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="plink-batch.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S7.2.3.6"></a>7.2.3.6 <a name="i0"></a>-no-antispoof: turn off authentication spoofing protection prompt</h1>
+<p>
+In SSH, some possible server authentication methods require user input (for example, password authentication, or entering a private key passphrase), and others do not (e.g. a private key held in Pageant).
+</p>
+<p>
+If you use Plink to run an interactive login session, and if Plink authenticates without needing any user interaction, and if the server is malicious or compromised, it could try to trick you into giving it authentication data that should not go to the server (such as your private key passphrase), by sending what <em>looks</em> like one of Plink's local prompts, as if Plink had not already authenticated.
+</p>
+<p>
+To protect against this, Plink's default policy is to finish the authentication phase with a final trivial prompt looking like this:
+</p>
+<pre><code>Access granted. Press Return to begin session.
+</code></pre>
+<p>
+so that if you saw anything that looked like an authentication prompt <em>after</em> that line, you would know it was not from Plink.
+</p>
+<p>
+That extra interactive step is inconvenient. So Plink will turn it off in as many situations as it can:
+</p>
+<ul><li>
+If Plink's standard input is not pointing at a console or terminal device &#8211; for example, if you're using Plink as a transport for some automated application like version control &#8211; then you <em>can't</em> type passphrases into the server anyway. In that situation, Plink won't try to protect you from the server trying to fool you into doing so.
+</li>
+<li>
+If Plink is in batch mode (see <a href="plink-usage-batch.html#S7.2.2">section 7.2.2</a>), then it <em>never</em> does any interactive authentication. So anything looking like an interactive authentication prompt is automatically suspect, and so Plink omits the anti-spoofing prompt.
+</li>
+</ul>
+<p>
+But if you still find the protective prompt inconvenient, and you trust the server not to try a trick like this, you can turn it off using the &#8216;<code>-no-antispoof</code>&#8217; option.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

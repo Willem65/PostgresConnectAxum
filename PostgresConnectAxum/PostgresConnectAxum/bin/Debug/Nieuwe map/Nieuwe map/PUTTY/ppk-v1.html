@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Version 1</title>
+<link rel="previous" href="ppk-v2.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="licence.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="SC.5.2"></a>C.5.2 Version 1</h1>
+<p>
+PPK version 1 was a badly designed format, only used during initial development, and not recommended for production use.
+</p>
+<p>
+PPK version 1 was never used by a released version of PuTTY. It was only emitted by some early development snapshots between version 0.51 (which did not support SSH-2 public keys at all) and 0.52 (which already used version 2 of this file format). I <em>hope</em> there are no PPK v1 files in use anywhere. But just in case, the old badly designed format is documented here anyway.
+</p>
+<p>
+In PPK version 1, the input to the MAC does not include any of the header fields or the public key. It is simply the private key data (still in plaintext and including random padding), all by itself (without a wrapping <code>string</code>).
+</p>
+<p>
+PPK version 1 keys must therefore be rigorously validated after loading, to ensure that the public and private parts of the key were consistent with each other.
+</p>
+<p>
+PPK version 1 only supported the RSA and DSA key types. For RSA, this validation can be done using only the provided data (since the private key blob contains enough information to reconstruct the public values anyway). But for DSA, that isn't quite enough.
+</p>
+<p>
+Hence, PPK version 1 DSA keys extended the private data so that immediately after <em>x</em> was stored an extra value:
+</p>
+<ul><li>
+<code>string</code>: a SHA-1 hash of the public key data, whose preimage consists of
+<ul><li>
+<code>string</code>: the large prime <em>p</em>
+</li>
+<li>
+<code>string</code>: the small prime <em>q</em>
+</li>
+<li>
+<code>string</code>: the group generator <em>g</em>
+</li>
+</ul>
+
+</li>
+</ul>
+<p>
+The idea was that checking this hash would verify that the key parameters had not been tampered with, and then the loading application could directly verify that <em>g</em><code>^</code><em>x</em><code>&nbsp;=&nbsp;</code><em>y</em>.
+</p>
+<p>
+In an <em>unencrypted</em> version 1 key file, the MAC is replaced by a plain SHA-1 hash of the private key data. This is indicated by the &#8216;<code>Private-MAC:</code>&#8217; header being replaced with &#8216;<code>Private-Hash:</code>&#8217; instead.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

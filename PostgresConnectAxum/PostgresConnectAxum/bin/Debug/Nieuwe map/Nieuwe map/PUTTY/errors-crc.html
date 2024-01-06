@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>&#8216;Incorrect MAC received on packet&#8217; or &#8216;Incorrect CRC received on packet&#8217;</title>
+<link rel="previous" href="errors-no-auth.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="errors-garbled.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S10.13"></a>10.13 &#8216;Incorrect <a name="i0"></a>MAC received on packet&#8217; or &#8216;Incorrect <a name="i1"></a>CRC received on packet&#8217;</h1>
+<p>
+This error occurs when PuTTY decrypts an SSH packet and its checksum is not correct. This probably means something has gone wrong in the encryption or decryption process. It's difficult to tell from this error message whether the problem is in the client, in the server, or in between.
+</p>
+<p>
+In particular, if the network is corrupting data at the TCP level, it may only be obvious with cryptographic protocols such as SSH, which explicitly check the integrity of the transferred data and complain loudly if the checks fail. Corruption of protocols without integrity protection (such as HTTP) will manifest in more subtle failures (such as misdisplayed text or images in a web browser) which may not be noticed.
+</p>
+<p>
+Occasionally this has been caused by server bugs. An example is the bug described at <a href="config-ssh-bug-hmac2.html#S4.27.10">section 4.27.10</a>, although you're very unlikely to encounter that one these days.
+</p>
+<p>
+In this context MAC stands for <a name="i2"></a>Message Authentication Code. It's a cryptographic term, and it has nothing at all to do with Ethernet MAC (Media Access Control) addresses, or with the Apple computer.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

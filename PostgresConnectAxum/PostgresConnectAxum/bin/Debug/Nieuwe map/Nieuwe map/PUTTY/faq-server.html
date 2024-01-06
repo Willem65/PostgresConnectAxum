@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Will you write an SSH server for the PuTTY suite, to go with the client?</title>
+<link rel="previous" href="faq-hostkeys.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="faq-pscp-ascii.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="QA.2.10"></a>A.2.10 Will you write an SSH server for the PuTTY suite, to go with the client?</h1>
+<p>
+Not one that you'd want to use.
+</p>
+<p>
+While much of the protocol and networking code can be made common between a client and server, to make a <em>useful</em> general-purpose server requires all sorts of fiddly new code like interacting with OS authentication databases and the like.
+</p>
+<p>
+A special-purpose SSH server (called <a name="i0"></a>Uppity) can now be built from the PuTTY source code, and indeed it is not usable as a general-purpose server; it exists mainly as a test harness.
+</p>
+<p>
+If someone else wants to use this as a basis for writing a general-purpose SSH server, they'd be perfectly welcome to of course; but we don't have time, and we don't have motivation. The code is available if anyone else wants to try it.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>

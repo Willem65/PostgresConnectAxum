@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>The &#8216;Key fingerprint&#8217; box</title>
+<link rel="previous" href="puttygen-generate.html">
+<link rel="ToC" href="index.html">
+<link rel="next" href="puttygen-comment.html">
+<link rel="stylesheet" type="text/css" href="chm.css"></head>
+<body>
+<h1><a name="S8.2.6"></a>8.2.6 The &#8216;<a name="i0"></a>Key fingerprint&#8217; box</h1>
+<p>
+The &#8216;Key fingerprint&#8217; box shows you a fingerprint value for the generated key. This is derived cryptographically from the <em>public</em> key value, so it doesn't need to be kept secret; it is supposed to be more manageable for human beings than the public key itself.
+</p>
+<p>
+The fingerprint value is intended to be cryptographically secure, in the sense that it is computationally infeasible for someone to invent a second key with the same fingerprint, or to find a key with a particular fingerprint. So some utilities, such as the Pageant key list box (see <a href="pageant-mainwin-keylist.html#S9.2.1">section 9.2.1</a>) and the Unix <code>ssh-add</code> utility, will list key fingerprints rather than the whole public key.
+</p>
+<p>
+By default, PuTTYgen will display SSH-2 key fingerprints in the &#8216;SHA256&#8217; format. If you need to see the fingerprint in the older &#8216;MD5&#8217; format (which looks like <code>aa:bb:cc:...</code>), you can choose &#8216;Show fingerprint as MD5&#8217; from the &#8216;Key&#8217; menu, but bear in mind that this is less cryptographically secure; it may be feasible for an attacker to create a key with the same fingerprint as yours.
+</p>
+
+<!-- version IDs:
+PuTTY release 0.78
+-->
+</body>
+</html>
