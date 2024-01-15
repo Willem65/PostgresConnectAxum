@@ -61,7 +61,7 @@ namespace PostgresConnectAxum
             string localFilePath = quote + folderPath + remoteStr + quote;
             string serverAddress = ipAdress;
 
-            // Construct the PSCP command
+            // Construct the PSCP command, haal de file op via pscp uitgevoerd op de cmd command prompt
             string pscpCommand = $"pscp -pw {password} {username}@{serverAddress}:{"/root/" + remoteStr} {localFilePath}";
 
             GlobalFunctions.cmdCommandOutput(pscpCommand);

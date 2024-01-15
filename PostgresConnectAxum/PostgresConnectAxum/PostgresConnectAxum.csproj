@@ -116,6 +116,21 @@
     <Compile Include="Form2_backupRestore\Form2UserPass.Designer.cs">
       <DependentUpon>Form2UserPass.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form3_RemoveLogs\Form3ChangeIPAxum.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form3_RemoveLogs\Form3ChangeIPAxum.Designer.cs">
+      <DependentUpon>Form3ChangeIPAxum.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form3_RemoveLogs\Form3ChangeUIidsAxum.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form3_RemoveLogs\Form3ChangeUIidsAxum.Designer.cs">
+      <DependentUpon>Form3ChangeUIidsAxum.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form3_RemoveLogs\Info.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form3_RemoveLogs\RebootAxum.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -182,6 +197,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form3_RemoveLogs\Form3.resx">
       <DependentUpon>Form3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form3_RemoveLogs\Form3ChangeIPAxum.resx">
+      <DependentUpon>Form3ChangeIPAxum.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form3_RemoveLogs\Form3ChangeUIidsAxum.resx">
+      <DependentUpon>Form3ChangeUIidsAxum.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form3_RemoveLogs\Form3UserPass.resx">
       <DependentUpon>Form3UserPass.cs</DependentUpon>

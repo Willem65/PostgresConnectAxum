@@ -16,26 +16,26 @@ namespace PostgresConnectAxum
             string username = "root";
             string password = "axum";
 
-            listBox1.Items.Clear();
+            textBox1.Clear();
 
             // Create a new SSH client
             using (var client = new SshClient(host, username, password))
             {
-                listBox1.Items.Add("Connecting").ToString();
-                listBox1.Items.Add("Please wait").ToString();
+                textBox1.AppendText("Connecting");
+                textBox1.AppendText("Please wait");
                 // Connect to the SSH server
                 client.Connect();
 
                 var command = client.RunCommand("rm /var/log/*.log*");
-                listBox1.Items.Add("").ToString();
-                listBox1.Items.Add(command.CommandText).ToString();
-                listBox1.Items.Add("").ToString();
+                textBox1.AppendText("");
+                textBox1.AppendText(command.CommandText);
+                textBox1.AppendText("");
                 command = client.RunCommand("sleep 1");
 
                 // Disconnect from the SSH server
-                listBox1.Items.Add("Disconnect").ToString();
+                textBox1.AppendText("Disconnect");
                 client.Disconnect();
-                listBox1.Items.Add("done").ToString();
+                textBox1.AppendText("done");
                 //enableButtons();
 
             }

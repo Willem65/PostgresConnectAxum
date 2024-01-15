@@ -6,7 +6,7 @@ namespace PostgresConnectAxum
 {
     class GlobalFunctions 
     {
-
+        // voor een opdracht uit op de cmd command prompt van windows.
         public static string cmdCommandOutput(string command)
         {
             Process p = new Process();

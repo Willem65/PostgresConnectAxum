@@ -25,6 +25,9 @@ namespace PostgresConnectAxum
 
             button2.Enabled = false;
             button3.Enabled = false;
+            button4.Enabled = false;
+            button5.Enabled = false;
+            button6.Enabled = false;
 
             Assembly execAssembly = Assembly.GetExecutingAssembly();
             //creationTime = new FileInfo(execAssembly.Location).CreationTime.ToString("ddMMyyyy");
@@ -38,7 +41,31 @@ namespace PostgresConnectAxum
 
         private void Form3_Activated(object sender, EventArgs e)
         {
+            string command = $"mkdir C:\\TempAxum\\";
+            string output = "";
+            if (command != null)
+            {
+                output = GlobalFunctions.cmdCommandOutput(command);
+            }
+
             Form3.ActiveForm.Text = "Remove log files v" + creationTime;
+        }
+
+        private void Form3_Load(object sender, EventArgs e)
+        {
+
+            textBox1.Clear();
+            textBox1.Font = new Font("courier", 11);
+            textBox1.ForeColor = System.Drawing.Color.DarkRed;
+            textBox1.AppendText("");
+            textBox1.AppendText("With this utility, you can delete the log files in the /var/log directory on the server\r\n");
+            textBox1.AppendText("\r\n");
+            textBox1.AppendText("If you are NOT sure what to do, stop now.\r\n");
+            textBox1.AppendText("\r\n");
+            textBox1.AppendText("If you are very sure what you are doing, you can choose the options left.\r\n");
+            textBox1.AppendText("\r\n");
+            textBox1.AppendText("We are not responsible. Be sure you already downloaded an image backup, from the Axum \r\n");
+            textBox1.AppendText("system configuration webpage \r\n");
         }
 
         // Connect button
@@ -51,26 +78,27 @@ namespace PostgresConnectAxum
 
             if (ipAdress == "")
             {
-                listBox1.Items.Clear();
+                textBox1.Clear();
                 MessageBox.Show("Enter IP address ");
                 return;
             }
 
+
             if (connected == false)
             {
                 connected = true;
-                listBox1.Items.Clear();
-                listBox1.Font = new Font("courier", 11);
-                listBox1.ForeColor = System.Drawing.Color.DarkRed;
-                listBox1.Items.Add("");
-                listBox1.Items.Add("With this utility, you can delete the log files in the /var/log directory on the server");
-                listBox1.Items.Add("");
-                listBox1.Items.Add("If you are NOT sure what to do, stop now.");
-                listBox1.Items.Add("");
-                listBox1.Items.Add("If you are very sure what you are doing, you can choose the options left.");
-                listBox1.Items.Add("");
-                listBox1.Items.Add("We are not responsible. Be sure you already downloaded an image backup, from the Axum ");
-                listBox1.Items.Add("system configuration webpage");
+                //textBox1.Clear();
+                //textBox1.Font = new Font("courier", 11);
+                //textBox1.ForeColor = System.Drawing.Color.DarkRed;
+                //textBox1.AppendText("");
+                //textBox1.AppendText("With this utility, you can delete the log files in the /var/log directory on the server\r\n");
+                //textBox1.AppendText("\r\n");
+                //textBox1.AppendText("If you are NOT sure what to do, stop now.\r\n");
+                //textBox1.AppendText("\r\n");
+                //textBox1.AppendText("If you are very sure what you are doing, you can choose the options left.\r\n");
+                //textBox1.AppendText("\r\n");
+                //textBox1.AppendText("We are not responsible. Be sure you already downloaded an image backup, from the Axum \r\n");
+                //textBox1.AppendText("system configuration webpage \r\n");
             }
             else
             {
@@ -92,7 +120,7 @@ namespace PostgresConnectAxum
             string username = GlobalVariables.uStr;
             string password = GlobalVariables.pStr;
 
-            string command = $"pscp -pw {password} {username}@{ipAdress}:{"/root/ test"}";
+            string command = $"echo y | pscp -pw {password} {username}@{ipAdress}:{"/root/ test"}";
             //string command = $"pscp -pw axm root@192.168.1.76:/root/ test";
 
             string output = "";
@@ -111,14 +139,20 @@ namespace PostgresConnectAxum
             {
                 button2.Enabled = true;
                 button3.Enabled = true;
+                button4.Enabled = true;
+                button5.Enabled = true;
+                button6.Enabled = true;
+
+                infoAxum(GlobalVariables.ipAddressStr);
+
             }
         }
 
 
-        // remove log files /var/log button
+        // remove log files from  /var/log button
         private void button2_Click(object sender, EventArgs e)
-        {      
-            listBox1.ForeColor = System.Drawing.Color.Black;
+        {
+            textBox1.ForeColor = System.Drawing.Color.Black;
             button2.Enabled = false;
             deleteLogs(GlobalVariables.ipAddressStr);
             button2.Enabled = true;
@@ -132,27 +166,60 @@ namespace PostgresConnectAxum
             }
         }
 
-        private void Form3_Load(object sender, EventArgs e)
-        {
-            //listBox1.Font = new Font("Tahoma", 11);
-            //listBox1.ForeColor = System.Drawing.Color.DarkRed;
-            //listBox1.Items.Add("");
-            //listBox1.Items.Add("With this utility, you can delete the log files in the /var/log directory on the server");
-            //listBox1.Items.Add("");
-            //listBox1.Items.Add("If you are NOT sure what to do, stop now.");
-            //listBox1.Items.Add("");
-            //listBox1.Items.Add("If you are very sure what you are doing, you can choose the options left.");
-            //listBox1.Items.Add("");
-            //listBox1.Items.Add("We are not responsible. Be sure you already downloaded an image backup, from the Axum ");
-            //listBox1.Items.Add("system configuration webpage");
-        }
 
+
+        // Reboot de axum
         private void button3_Click(object sender, EventArgs e)
         {
-            listBox1.ForeColor = System.Drawing.Color.Black;
+            //textBox1.ForeColor = System.Drawing.Color.Black;
             button2.Enabled = false;
             rebootAxum(GlobalVariables.ipAddressStr);
             button2.Enabled = true;
+        }
+
+        // Verander de UIids van de axum processen
+        private void button4_Click(object sender, EventArgs e)
+        {
+            button2.Enabled = false;
+            Form3ChangeUIidsAxum inputForm = new Form3ChangeUIidsAxum();
+            inputForm.ChangeUIidsAxum(GlobalVariables.ipAddressStr);
+            inputForm.Show();
+            button2.Enabled = true;
+        }
+
+        // Display global information
+        private void button5_Click(object sender, EventArgs e)
+        {
+            button2.Enabled = false;
+            infoAxum(GlobalVariables.ipAddressStr);
+            button2.Enabled = true;
+        }
+
+        // Verander het IP adres
+        private void button6_Click(object sender, EventArgs e)
+        {
+            //Form3ChangeIPAxum
+            button2.Enabled = false;
+            Form3ChangeIPAxum changeIPForm = new Form3ChangeIPAxum();
+            changeIPForm.ChangeIPAxum(GlobalVariables.ipAddressStr);
+            changeIPForm.Show();
+            button2.Enabled = true;
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            textBox1.Clear();
+            textBox1.Font = new Font("courier", 11);
+            textBox1.ForeColor = System.Drawing.Color.DarkRed;
+            textBox1.AppendText("");
+            textBox1.AppendText("Remove Log files\r\n");
+            textBox1.AppendText("\r\n");
+            textBox1.AppendText("Dante 16 to 32 issue run perl.\r\n");
+            textBox1.AppendText("\r\n");
+            textBox1.AppendText("Bitrate clock.\r\n");
+            textBox1.AppendText("\r\n");
+            textBox1.AppendText(" \r\n");
+            //textBox1.AppendText("system configuration webpage \r\n");
         }
     }
 }
