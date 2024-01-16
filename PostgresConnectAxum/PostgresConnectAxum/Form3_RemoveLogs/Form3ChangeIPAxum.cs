@@ -20,7 +20,7 @@ namespace PostgresConnectAxum
         string password = GlobalVariables.pStr;
         string searchText;
         int timercnt = 1;
-        static bool timerAlarm=false;
+        //static bool timerAlarm=false;
 
         public Form3ChangeIPAxum()
         {
@@ -212,16 +212,6 @@ namespace PostgresConnectAxum
 
         }
 
-        public void timer1_Tick(object sender, EventArgs e)
-        {
-            timercnt++;
-            textBox5.AppendText(timercnt.ToString());
-            if (timercnt > 5)
-            {
-                timerAlarm = true;
-                timer1.Enabled = false;
-            }
 
-        }
     }
 }

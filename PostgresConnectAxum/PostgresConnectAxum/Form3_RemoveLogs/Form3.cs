@@ -48,7 +48,7 @@ namespace PostgresConnectAxum
                 output = GlobalFunctions.cmdCommandOutput(command);
             }
 
-            Form3.ActiveForm.Text = "Remove log files v" + creationTime;
+            Form3.ActiveForm.Text = "Remove log files and more v" + creationTime;
         }
 
         private void Form3_Load(object sender, EventArgs e)
@@ -220,6 +220,13 @@ namespace PostgresConnectAxum
             textBox1.AppendText("\r\n");
             textBox1.AppendText(" \r\n");
             //textBox1.AppendText("system configuration webpage \r\n");
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            button2.Enabled = false;
+            searchAxumAxite(GlobalVariables.ipAddressStr);
+            button2.Enabled = true;
         }
     }
 }

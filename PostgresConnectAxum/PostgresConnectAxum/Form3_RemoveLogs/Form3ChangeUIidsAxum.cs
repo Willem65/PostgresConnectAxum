@@ -12,7 +12,7 @@ namespace PostgresConnectAxum
 {
     public partial class Form3ChangeUIidsAxum : Form 
     {
-
+        string rackOrUi;
         string host;
         string username = GlobalVariables.uStr;
         string password = GlobalVariables.pStr;
@@ -48,25 +48,56 @@ namespace PostgresConnectAxum
                 if (client.IsConnected)
                 {
                     var command = client.RunCommand(@"cat /var/lib/axum/uniqueids-rack");
+                    if (command.Result == "")
+                    {
+                        command = client.RunCommand(@"cat /var/lib/axum/uniqueids-ui");
+                        rackOrUi = "ui";
+                    }
+                    else
+                    {
+                        rackOrUi = "rack";
+                    }
+
                     textBox5.Text = command.Result.Replace("\n", "\r\n");
-                    //command = client.RunCommand("sleep 1");
                     string message = textBox5.Text + "                                         ";
 
-                    int pos1 = message.IndexOf("axum-address") +13;
-                    string data = message.Substring(pos1, 4).Trim();
-                    textBox1.Text = data;
+                    if (message.Contains("axum-address"))
+                    {
+                        int pos1 = message.IndexOf("axum-address") + 13;
+                        string data = message.Substring(pos1, 4).Trim();
+                        textBox1.Text = data;
+                    }
 
-                    pos1 = message.IndexOf("axum-engine") + 12;
-                    data = message.Substring(pos1, 4).Trim();
-                    textBox2.Text = data;
+                    if (message.Contains("axum-engine"))
+                    {
+                        int pos1 = message.IndexOf("axum-engine") + 12;
+                        string data = message.Substring(pos1, 4).Trim();
+                        textBox2.Text = data;
+                    }
 
-                    pos1 = message.IndexOf("axum-gateway") + 13;
-                    data = message.Substring(pos1, 4).Trim();
-                    textBox3.Text = data;
+                    if (message.Contains("axum-gateway"))
+                    {
+                        int pos1 = message.IndexOf("axum-gateway") + 13;
+                        string data = message.Substring(pos1, 4).Trim();
+                        textBox3.Text = data;
+                    }
 
-                    pos1 = message.IndexOf("axum-learner") + 13;
-                    data = message.Substring(pos1, 4).Trim();
-                    textBox4.Text = data;
+                    if (message.Contains("axum-learner"))
+                    {
+                        int pos1 = message.IndexOf("axum-learner") + 13;
+                        string data = message.Substring(pos1, 4).Trim();
+                        textBox4.Text = data;
+                        textBox5.AppendText("\r\nRack-Engine");
+                    }
+
+                    if (message.Contains("axum-meters"))
+                    {
+                        int pos1 = message.IndexOf("axum-meters") + 12;
+                        string data = message.Substring(pos1, 4).Trim();
+                        textBox6.Text = data;
+                        textBox5.AppendText("\r\nUI-Surface");
+                    }
+
                     client.Disconnect();
                 }
             }
@@ -98,55 +129,82 @@ namespace PostgresConnectAxum
                 {
                     //string uiids = "axum-address 121 axum-engine 121 axum-gateway 121 axum-learner 121 ";
 
+                    if (rackOrUi == "rack")
+                    {
+                        string uiids = "axum-address " + textBox1.Text.Trim();
+                        client.RunCommand(@"echo " + uiids + " > /var/lib/axum/uniqueids-" + rackOrUi);
+                        uiids = "\n";
+                        client.RunCommand(@"echo " + uiids + " >> /var/lib/axum/uniqueids-" + rackOrUi);
 
-                    string uiids = "axum-address " + textBox1.Text.Trim();
-                    var command = client.RunCommand(@"echo " + uiids + " > /var/lib/axum/uniqueids-rack");
-                    uiids = "\n";
-                    command = client.RunCommand(@"echo " + uiids + " >> /var/lib/axum/uniqueids-rack");
+                        uiids = "axum-engine " + textBox2.Text.Trim();
+                        client.RunCommand(@"echo " + uiids + " >> /var/lib/axum/uniqueids-" + rackOrUi);
+                        uiids = "\n";
+                        client.RunCommand(@"echo " + uiids + " >> /var/lib/axum/uniqueids-" + rackOrUi);
+
+                        uiids = "axum-gateway " + textBox3.Text.Trim();
+                        client.RunCommand(@"echo " + uiids + " >> /var/lib/axum/uniqueids-" + rackOrUi);
+                        uiids = "\n";
+                        client.RunCommand(@"echo " + uiids + " >> /var/lib/axum/uniqueids-" + rackOrUi);
+
+                        uiids = "axum-learner " + textBox4.Text.Trim();
+                        client.RunCommand(@"echo " + uiids + " >> /var/lib/axum/uniqueids-" + rackOrUi);
+                        uiids = "\n";
+                        client.RunCommand(@"echo " + uiids + " >> /var/lib/axum/uniqueids-" + rackOrUi);
+                    }
+                    else if (rackOrUi == "ui")
+                    {
+                        string uiids = "axum-gateway " + textBox3.Text.Trim();
+                        client.RunCommand(@"echo " + uiids + " > /var/lib/axum/uniqueids-" + rackOrUi);
+                        uiids = "\n";
+                        client.RunCommand(@"echo " + uiids + " >> /var/lib/axum/uniqueids-" + rackOrUi);
+
+                        uiids = "axum-meters " + textBox6.Text.Trim();
+                        client.RunCommand(@"echo " + uiids + " >> /var/lib/axum/uniqueids-" + rackOrUi);
+                        uiids = "\n";
+                        client.RunCommand(@"echo " + uiids + " >> /var/lib/axum/uniqueids-" + rackOrUi);
+                    }
 
 
-                    uiids = "axum-engine " + textBox2.Text.Trim();
-                    command = client.RunCommand(@"echo " + uiids + " >> /var/lib/axum/uniqueids-rack");
-                    uiids = "\n";
-                    command = client.RunCommand(@"echo " + uiids + " >> /var/lib/axum/uniqueids-rack");
 
-
-
-
-                    uiids = "axum-gateway " + textBox3.Text.Trim();
-                    command = client.RunCommand(@"echo " + uiids + " >> /var/lib/axum/uniqueids-rack");
-                    uiids = "\n";
-                    command = client.RunCommand(@"echo " + uiids + " >> /var/lib/axum/uniqueids-rack");
-
-
-                    uiids = "axum-learner " + textBox4.Text.Trim();
-                    command = client.RunCommand(@"echo " + uiids + " >> /var/lib/axum/uniqueids-rack");
-                    uiids = "\n";
-                    command = client.RunCommand(@"echo " + uiids + " >> /var/lib/axum/uniqueids-rack");
-
-
-
-
-                    command = client.RunCommand(@"cat /var/lib/axum/uniqueids-rack");
+                    var command = client.RunCommand(@"cat /var/lib/axum/uniqueids-" + rackOrUi);
                     textBox5.Text = command.Result.Replace("\n", "\r\n");
                     //command = client.RunCommand("sleep 1");
                     string message = textBox5.Text + "                                         ";
 
-                    int pos1 = message.IndexOf("axum-address") + 13;
-                    string data = message.Substring(pos1, 4).Trim();
-                    textBox1.Text = data;
+                    if (message.Contains("axum-address"))
+                    {
+                        int pos1 = message.IndexOf("axum-address") + 13;
+                        string data = message.Substring(pos1, 4).Trim();
+                        textBox1.Text = data;
+                    }
 
-                    pos1 = message.IndexOf("axum-engine") + 12;
-                    data = message.Substring(pos1, 4).Trim();
-                    textBox2.Text = data;
+                    if (message.Contains("axum-engine"))
+                    {
+                        int pos1 = message.IndexOf("axum-engine") + 12;
+                        string data = message.Substring(pos1, 4).Trim();
+                        textBox2.Text = data;
+                    }
 
-                    pos1 = message.IndexOf("axum-gateway") + 13;
-                    data = message.Substring(pos1, 4).Trim();
-                    textBox3.Text = data;
+                    if (message.Contains("axum-gateway"))
+                    {
+                        int pos1 = message.IndexOf("axum-gateway") + 13;
+                        string data = message.Substring(pos1, 4).Trim();
+                        textBox3.Text = data;
+                    }
 
-                    pos1 = message.IndexOf("axum-learner") + 13;
-                    data = message.Substring(pos1, 4).Trim();
-                    textBox4.Text = data;
+                    if (message.Contains("axum-learner"))
+                    {
+                        int pos1 = message.IndexOf("axum-learner") + 13;
+                        string data = message.Substring(pos1, 4).Trim();
+                        textBox4.Text = data;
+                    }
+
+                    if (message.Contains("axum-meters"))
+                    {
+                        int pos1 = message.IndexOf("axum-meters") + 12;
+                        string data = message.Substring(pos1, 4).Trim();
+                        textBox6.Text = data;
+                    }
                     client.Disconnect();
                 }
             }

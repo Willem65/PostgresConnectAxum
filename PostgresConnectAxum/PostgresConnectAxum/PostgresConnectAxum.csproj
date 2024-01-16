@@ -128,6 +128,9 @@
     <Compile Include="Form3_RemoveLogs\Form3ChangeUIidsAxum.Designer.cs">
       <DependentUpon>Form3ChangeUIidsAxum.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form3_RemoveLogs\SerchAxumAxite.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form3_RemoveLogs\Info.cs">
       <SubType>Form</SubType>
     </Compile>
