@@ -1,22 +1,50 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 using Renci.SshNet;
+using ThreadState = System.Threading.ThreadState;
 
 namespace PostgresConnectAxum
 {
     //class Backup
     public partial class Form3 : Form
     {
-        
+        //bool procend = false;
+
+        public  void run()
+        {
+            Process process = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo()
+            {
+                FileName = @"C:\LogfilesRemoveETCsmallVersion\advanced_ip_scanner_console.exe",
+                Verb = "runas", // Run as administrator
+                Arguments = "/r:192.168.1.1-192.168.1.255 /f:c:\\TempAxum\\results.txt",
+                RedirectStandardInput = true,
+                RedirectStandardOutput = true,
+                UseShellExecute = false,
+                RedirectStandardError = true,
+                WindowStyle = ProcessWindowStyle.Hidden,
+                CreateNoWindow = true
+            };
+
+            process.StartInfo = startInfo;
+            //process.StartInfo.Arguments(folderPath);
+            process.Start();
+            process.WaitForExit();
+            //if (process.ExitCode == 0)
+            //    procend = true;
+        }
+
         public void searchAxumAxite(string ipAdress)
-        { 
-            //disableButtons();
-            // Connection info
+        {
+
+
             string host = ipAdress;
             string username = GlobalVariables.uStr;
             string password = GlobalVariables.pStr;
@@ -24,86 +52,41 @@ namespace PostgresConnectAxum
             textBox1.Clear();
 
 
-            ////// string batchFile = @"advanced_ip_scanner_console.exe /r:192.168.1.1-192.168.1.255 /f:c:\TempAxum\results.txt";
-            //////string pingOutput = GlobalFunctions.cmdCommandErr(pingCmd);
+            timer1.Enabled = true;
+            Thread tr = new Thread(run);
+            tr.Start();
 
-            //////string batchFile = ((char)34) + programFilePath + "git-private.bat " + ((char)34);
-            //////Process process = new Process();
-            //////ProcessStartInfo startInfo = new ProcessStartInfo()
-            //////{
-            //////    FileName = batchFile,
-            //////    Verb = "runas", // Run as administrator
-            //////    Arguments = ((char)34) + folderPath + ((char)34),
-            //////    RedirectStandardInput = true,
-            //////    RedirectStandardOutput = true,
-            //////    UseShellExecute = false,
-            //////    RedirectStandardError = true,
-
-            //////    CreateNoWindow = true
-            //////};
-
-            //////Process process = new Process();
-            //////ProcessStartInfo startInfo = new ProcessStartInfo()
-            //////{
-            //////    FileName = batchFile,
-            //////    Verb = "runas", // Run as administrator
-            //////    Arguments = folderPath,
-            //////    RedirectStandardInput = true,
-            //////    RedirectStandardOutput = true,
-            //////    UseShellExecute = false,
-            //////    CreateNoWindow = true
-            //////};
-
-            ////Process process = new Process();
-            ////ProcessStartInfo startInfo = new ProcessStartInfo()
-            ////{
-            ////    FileName = @"C:\LogfilesRemoveETCsmallVersion\advanced_ip_scanner_console.exe",
-            ////    Verb = "runas", // Run as administrator
-            ////    Arguments = "/r:192.168.1.1-192.168.1.255 /f:c:\\TempAxum\\results.txt",
-            ////    RedirectStandardInput = true,
-            ////    RedirectStandardOutput = true,
-            ////    UseShellExecute = false,
-            ////    RedirectStandardError = true,
-            ////    CreateNoWindow = true
-            ////};
-
-            ////process.StartInfo = startInfo;
-            //////process.StartInfo.Arguments(folderPath);
-            ////process.Start();
-
-            //////Thread.Sleep(5000);
-            //////foreach (var node in Process.GetProcessesByName("cmd"))
-            //////{
-            //////    node.Kill();
-            //////}
-
-            ////process.WaitForExit();
-
-            ////string str = process.StandardOutput.ReadToEnd();
-            ////Thread.Sleep(1);
-            ////string output = process.StandardError.ReadToEnd();
-            ////Thread.Sleep(1);
-            ////textBox1.Clear();
-            ////textBox1.Text = (str + "\r\n" + output + "\r\n");
-            ///
-
-            string readFile = File.ReadAllText("C:\\TempAxum\\results.txt");
-            int pos1 = readFile.IndexOf("PCS") - 50;
-            //string searchText = readFile.Substring(pos1, 16).Trim();
-            //int pos2 = searchText.IndexOf("\"");
-            //File.WriteAllText("C:\\TempAxum\\results.txt", File.ReadAllText("C:\\TempAxum\\results.txt").Remove(pos1, pos2));
-            //File.WriteAllText("C:\\TempAxum\\results.txt", File.ReadAllText("C:\\TempAxum\\results.txt").Insert(pos1, textBox1.Text.Trim()));
-
-            //string readFile = File.ReadAllText("C:\\TempAxum\\results.txt");
-
-            if (readFile.Contains("PCS"))
-                textBox1.AppendText(readFile.Substring(pos1, 150));
+            //tr.ThreadState= 
 
 
+            if (tr.ThreadState == ThreadState.Background)
+            {
+                timer1.Enabled = false;
+                foreach (var line in System.IO.File.ReadAllLines("C:\\TempAxum\\results.txt"))
+                {
+                    if (line.Contains("PCS"))
+                    {
+                        if (line.Contains("alive"))
+                        {
+                            string[] parts = line.Split(new[] { '|' });
+                            textBox1.AppendText(parts[4].Trim() + " <----------- Axum Rack Engine\r\n");
+                            textBox1.AppendText(parts[7].Trim() + " \r\n");
+                            textBox1.AppendText(parts[8].Trim() + "\r\n\r\n");
 
-            //textBox1.AppendText(result.ToString());
-
-
+                        }
+                    }
+                    if (line.Contains("ICP"))
+                    {
+                        if (line.Contains("alive"))
+                        {
+                            string[] parts = line.Split(new[] { '|' });
+                            textBox1.AppendText(parts[4].Trim() + " <----------- Axum Surface \r\n");
+                            textBox1.AppendText(parts[7].Trim() + " \r\n");
+                            textBox1.AppendText(parts[8].Trim() + "\r\n\r\n");
+                        }
+                    }
+                }
+            }
         }
     }
 }

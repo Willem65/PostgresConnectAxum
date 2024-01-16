@@ -228,5 +228,15 @@ namespace PostgresConnectAxum
             searchAxumAxite(GlobalVariables.ipAddressStr);
             button2.Enabled = true;
         }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            //textBox1.Text = DateTime.Now.ToString();
+            textBox1.AppendText("#");
+            //textBox1.AppendText("#");
+
+
+
+        }
     }
 }
