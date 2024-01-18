@@ -31,7 +31,7 @@ namespace PostgresConnectAxum
 
             Assembly execAssembly = Assembly.GetExecutingAssembly();
             //creationTime = new FileInfo(execAssembly.Location).CreationTime.ToString("ddMMyyyy");
-            creationTime = new FileInfo(execAssembly.Location).LastAccessTime.ToString("ddMMyyyy");
+            //creationTime = new FileInfo(execAssembly.Location).LastAccessTime.ToString("ddMMyyyy");
 
             instance = this;
             but1 = button1;
@@ -48,7 +48,7 @@ namespace PostgresConnectAxum
                 output = GlobalFunctions.cmdCommandOutput(command);
             }
 
-            Form3.ActiveForm.Text = "Remove log files and more v" + creationTime;
+            //Form3.ActiveForm.Text = "Remove log files and more v" + creationTime;
         }
 
         private void Form3_Load(object sender, EventArgs e)
@@ -225,14 +225,16 @@ namespace PostgresConnectAxum
         private void button11_Click(object sender, EventArgs e)
         {
             button2.Enabled = false;
-            searchAxumAxite(GlobalVariables.ipAddressStr);
+            searchAxumAxite ch = new searchAxumAxite();
+            ch.searchAxumAxit(GlobalVariables.ipAddressStr);
+            ch.Show();
             button2.Enabled = true;
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
             //textBox1.Text = DateTime.Now.ToString();
-            textBox1.AppendText("#");
+            //textBox1.AppendText("#");
             //textBox1.AppendText("#");
 
 
